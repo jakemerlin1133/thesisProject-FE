@@ -48,7 +48,7 @@ const Login = ({ navigation }) => {
     <Background>
       <View style={(styles.Container, [{ marginTop: marginTop, margin: 40 }])}>
         <View>
-          <Text style={styles.title}>Expensense</Text>
+          <Text style={styles.title}>Expensenses</Text>
           <Text style={styles.subTitle}>Personal financial manager</Text>
         </View>
 
