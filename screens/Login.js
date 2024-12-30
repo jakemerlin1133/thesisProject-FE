@@ -30,11 +30,10 @@ const Login = ({ navigation }) => {
         }
       );
       if (response.status === 200) {
-        const userId = response.data.user.id;
-        navigation.navigate("DashboardTabs", {
-          screen: "Dashboard",
-          params: { userId },
-        });
+        // const userId = response.data.user.id;
+        // navigation.navigate("DashboardTabs", {
+        //   userId,
+        // });
       }
     } catch (error) {
       setErrorMessage("Invalid Username or Password.");
