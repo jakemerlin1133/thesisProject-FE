@@ -113,4 +113,8 @@ const pickerStyles = {
     fontWeight: "bold",
     marginHorizontal: 4,
   },
+  placeholder: {
+    color: Colors.brown100,
+    fontWeight: "bold",
+  },
 };
