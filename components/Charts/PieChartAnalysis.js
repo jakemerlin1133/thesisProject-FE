@@ -59,6 +59,5 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.brown500,
     borderRadius: 16,
-    marginBottom: 60,
   },
 });

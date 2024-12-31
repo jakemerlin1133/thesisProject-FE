@@ -9,10 +9,13 @@ const Analysis = () => {
       <View style={styles.chartContainer}>
         <ScrollView>
           <Text style={styles.title}>
-            "Comparison of Expense Categories: This Month and Last Month"
+            "Comparison of Expense Categories: This Month and Chosen Month"
           </Text>
           <Text style={styles.subTitle}>This Month:</Text>
           <PieChartAnalysis />
+          <Text style={styles.totalExpenses}>
+            Total Expenses for this month: 24000
+          </Text>
           <View style={styles.row}>
             <Text style={styles.subTitle}>From:</Text>
             <RNPickerSelect
@@ -45,6 +48,9 @@ const Analysis = () => {
             />
           </View>
           <PieChartAnalysis />
+          <Text style={styles.totalExpenses}>
+            Total Expenses for this month: 24000
+          </Text>
         </ScrollView>
       </View>
     </>
@@ -77,23 +83,34 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginRight: 10,
   },
+  totalExpenses: {
+    color: Colors.brown600,
+    fontWeight: "bold",
+    fontSize: 17,
+    marginRight: 10,
+    marginBottom: 25,
+  },
 });
 
 const pickerStyles = {
   inputAndroid: {
-    width: 150,
-    backgroundColor: "#f0f0f0",
+    width: 140,
+    backgroundColor: Colors.brown600,
     borderRadius: 5,
     paddingHorizontal: 10,
-    paddingVertical: 8,
     marginVertical: 10,
+    color: Colors.brown100,
+    fontWeight: "bold",
+    marginHorizontal: 4,
   },
   inputIOS: {
-    width: 150,
-    backgroundColor: "#f0f0f0",
+    width: 160,
+    backgroundColor: Colors.brown600,
     borderRadius: 5,
     paddingHorizontal: 10,
-    paddingVertical: 8,
     marginVertical: 10,
+    color: Colors.brown100,
+    fontWeight: "bold",
+    marginHorizontal: 4,
   },
 };
