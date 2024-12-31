@@ -4,7 +4,6 @@ import {
   Text,
   FlatList,
   StyleSheet,
-  Button,
   Platform,
   TouchableOpacity,
 } from "react-native";
@@ -21,571 +20,571 @@ const Report = () => {
     {
       id: "1",
       store_name: "Jollibee",
-      expenses: 1,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 1,
     },
     {
       id: "2",
       store_name: "Jollibee",
-      expenses: 2,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 2,
     },
     {
       id: "3",
       store_name: "Jollibee",
-      expenses: 3,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 3,
     },
     {
       id: "4",
       store_name: "Jollibee",
-      expenses: 4,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 4,
     },
     {
       id: "5",
       store_name: "Jollibee",
-      expenses: 5,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 5,
     },
     {
       id: "6",
       store_name: "Jollibee",
-      expenses: 6,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 6,
     },
     {
       id: "7",
       store_name: "Jollibee",
-      expenses: 7,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 7,
     },
     {
       id: "8",
       store_name: "Jollibee",
-      expenses: 8,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 8,
     },
     {
       id: "9",
       store_name: "Jollibee",
-      expenses: 9,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 9,
     },
     {
       id: "10",
       store_name: "Jollibee",
-      expenses: 10,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 10,
     },
     {
       id: "11",
       store_name: "Jollibee",
-      expenses: 11,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 11,
     },
     {
       id: "12",
       store_name: "Jollibee",
-      expenses: 12,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 12,
     },
     {
       id: "13",
       store_name: "Jollibee",
-      expenses: 13,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 13,
     },
     {
       id: "14",
       store_name: "Jollibee",
-      expenses: 14,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 14,
     },
     {
       id: "15",
       store_name: "Jollibee",
-      expenses: 15,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 15,
     },
     {
       id: "16",
       store_name: "Jollibee",
-      expenses: 16,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 16,
     },
     {
       id: "17",
       store_name: "Jollibee",
-      expenses: 17,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 17,
     },
     {
       id: "18",
       store_name: "Jollibee",
-      expenses: 18,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 18,
     },
     {
       id: "19",
       store_name: "Jollibee",
-      expenses: 19,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 19,
     },
     {
       id: "20",
       store_name: "Jollibee",
-      expenses: 20,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 20,
     },
     {
       id: "21",
       store_name: "Jollibee",
-      expenses: 21,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 21,
     },
     {
       id: "22",
       store_name: "Jollibee",
-      expenses: 22,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 22,
     },
     {
       id: "23",
       store_name: "Jollibee",
-      expenses: 23,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 23,
     },
     {
       id: "24",
       store_name: "Jollibee",
-      expenses: 24,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 24,
     },
     {
       id: "25",
       store_name: "Jollibee",
-      expenses: 25,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 25,
     },
     {
       id: "26",
       store_name: "Jollibee",
-      expenses: 26,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 26,
     },
     {
       id: "27",
       store_name: "Jollibee",
-      expenses: 27,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 27,
     },
     {
       id: "28",
       store_name: "Jollibee",
-      expenses: 28,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 28,
     },
     {
       id: "29",
       store_name: "Jollibee",
-      expenses: 29,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 29,
     },
     {
       id: "30",
       store_name: "Jollibee",
-      expenses: 30,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 30,
     },
     {
       id: "31",
       store_name: "Jollibee",
-      expenses: 31,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 31,
     },
     {
       id: "32",
       store_name: "Jollibee",
-      expenses: 32,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 32,
     },
     {
       id: "33",
       store_name: "Jollibee",
-      expenses: 33,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 33,
     },
     {
       id: "34",
       store_name: "Jollibee",
-      expenses: 34,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 34,
     },
     {
       id: "35",
       store_name: "Jollibee",
-      expenses: 35,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 35,
     },
     {
       id: "36",
       store_name: "Jollibee",
-      expenses: 36,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 36,
     },
     {
       id: "37",
       store_name: "Jollibee",
-      expenses: 37,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 37,
     },
     {
       id: "38",
       store_name: "Jollibee",
-      expenses: 38,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 38,
     },
     {
       id: "39",
       store_name: "Jollibee",
-      expenses: 39,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 39,
     },
     {
       id: "40",
       store_name: "Jollibee",
-      expenses: 40,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 40,
     },
     {
       id: "41",
       store_name: "Jollibee",
-      expenses: 41,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 41,
     },
     {
       id: "42",
       store_name: "Jollibee",
-      expenses: 42,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 42,
     },
     {
       id: "43",
       store_name: "Jollibee",
-      expenses: 43,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 43,
     },
     {
       id: "44",
       store_name: "Jollibee",
-      expenses: 44,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 44,
     },
     {
       id: "45",
       store_name: "Jollibee",
-      expenses: 45,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 45,
     },
     {
       id: "46",
       store_name: "Jollibee",
-      expenses: 46,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 46,
     },
     {
       id: "47",
       store_name: "Jollibee",
-      expenses: 47,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 47,
     },
     {
       id: "48",
       store_name: "Jollibee",
-      expenses: 48,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 48,
     },
     {
       id: "49",
       store_name: "Jollibee",
-      expenses: 49,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 49,
     },
     {
       id: "50",
       store_name: "Jollibee",
-      expenses: 50,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 50,
     },
     {
       id: "51",
       store_name: "Jollibee",
-      expenses: 51,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 51,
     },
     {
       id: "52",
       store_name: "Jollibee",
-      expenses: 52,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 52,
     },
     {
       id: "53",
       store_name: "Jollibee",
-      expenses: 53,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 53,
     },
     {
       id: "54",
       store_name: "Jollibee",
-      expenses: 54,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 54,
     },
     {
       id: "55",
       store_name: "Jollibee",
-      expenses: 55,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 55,
     },
     {
       id: "56",
       store_name: "Jollibee",
-      expenses: 56,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 56,
     },
     {
       id: "57",
       store_name: "Jollibee",
-      expenses: 57,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 57,
     },
     {
       id: "58",
       store_name: "Jollibee",
-      expenses: 58,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 58,
     },
     {
       id: "59",
       store_name: "Jollibee",
-      expenses: 59,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 59,
     },
     {
       id: "60",
       store_name: "Jollibee",
-      expenses: 60,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 60,
     },
     {
       id: "61",
       store_name: "Jollibee",
-      expenses: 61,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 61,
     },
     {
       id: "62",
       store_name: "Jollibee",
-      expenses: 62,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 62,
     },
     {
       id: "63",
       store_name: "Jollibee",
-      expenses: 63,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 63,
     },
     {
       id: "64",
       store_name: "Jollibee",
-      expenses: 64,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 64,
     },
     {
       id: "65",
       store_name: "Jollibee",
-      expenses: 65,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 65,
     },
     {
       id: "66",
       store_name: "Jollibee",
-      expenses: 66,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 66,
     },
     {
       id: "67",
       store_name: "Jollibee",
-      expenses: 67,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 67,
     },
     {
       id: "68",
       store_name: "Jollibee",
-      expenses: 68,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 68,
     },
     {
       id: "69",
       store_name: "Jollibee",
-      expenses: 69,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 69,
     },
     {
       id: "70",
       store_name: "Jollibee",
-      expenses: 70,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 70,
     },
     {
       id: "71",
       store_name: "Jollibee",
-      expenses: 71,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 71,
     },
     {
       id: "72",
       store_name: "Jollibee",
-      expenses: 72,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 72,
     },
     {
       id: "73",
       store_name: "Jollibee",
-      expenses: 73,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 73,
     },
     {
       id: "74",
       store_name: "Jollibee",
-      expenses: 74,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 74,
     },
     {
       id: "75",
       store_name: "Jollibee",
-      expenses: 75,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 75,
     },
     {
       id: "76",
       store_name: "Jollibee",
-      expenses: 76,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 76,
     },
     {
       id: "77",
       store_name: "Jollibee",
-      expenses: 77,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 77,
     },
     {
       id: "78",
       store_name: "Jollibee",
-      expenses: 78,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 78,
     },
     {
       id: "79",
       store_name: "Jollibee",
-      expenses: 39,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 79,
     },
     {
       id: "80",
       store_name: "Jollibee",
-      expenses: 40,
       category: "Foods",
       date: "May, 13, 2001",
+      expenses: 80,
     },
   ];
 
   const renderItem = ({ item }) => (
     <View style={styles.rows}>
       <Text style={styles.cell}>{item.store_name}</Text>
-      <Text style={styles.cell}>{item.expenses}</Text>
       <Text style={styles.cell}>{item.category}</Text>
       <Text style={styles.cell}>{item.date}</Text>
+      <Text style={styles.cell}>{item.expenses}</Text>
     </View>
   );
 
@@ -626,9 +625,9 @@ const Report = () => {
       table += `
     <tr>
       <td>${item.store_name}</td>
-      <td>${item.expenses}</td>
       <td>${item.category}</td>
       <td>${item.date}</td>
+      <td>${item.expenses}</td>
     </tr>
   `;
     });
@@ -636,6 +635,11 @@ const Report = () => {
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <style>
+    tr:nth-child(even) {
+  background-color: #dddddd;
+}
+    </style>
   </head>
   <body style="text-align: center;">
    <table border="1" style="width: 100%; text-align: center; border-collapse: collapse;">
@@ -643,9 +647,9 @@ const Report = () => {
     <thead>
           <tr>
             <th>Store Name</th>
-            <th>Expenses</th>
             <th>Category</th>
             <th>Date</th>
+            <th>Expenses</th>
           </tr>
         </thead>
          <tbody>
@@ -716,28 +720,49 @@ const Report = () => {
       </View>
 
       <View style={styles.tableContainer}>
-        <View style={styles.header}>
-          <Text style={styles.headerCell}>Store name</Text>
-          <Text style={styles.headerCell}>Expenses</Text>
-          <Text style={styles.headerCell}>Category</Text>
-          <Text style={styles.headerCell}>Date</Text>
-        </View>
-        <FlatList
-          data={paginatedData}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
-        />
-        <View style={styles.paginationContainer}>
-          <TouchableOpacity
-            onPress={goToPreviousPage}
-            style={styles.pageButton}
-          >
-            <Text style={styles.pageButtonText}>Previous</Text>
-          </TouchableOpacity>
-          <Text style={styles.pageInfo}>Page {currentPage}</Text>
-          <TouchableOpacity onPress={goToNextPage} style={styles.pageButton}>
-            <Text style={styles.pageButtonText}>Next</Text>
-          </TouchableOpacity>
+        <View>
+          <FlatList
+            data={paginatedData}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id.toString()}
+            contentContainerStyle={styles.tableContainer}
+            ListHeaderComponent={
+              <View style={styles.header}>
+                <TouchableOpacity style={styles.headerCell}>
+                  <Text style={styles.textHeader}>Store name</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.headerCell}>
+                  <Text style={styles.textHeader}>Category</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.headerCell}>
+                  <Text style={styles.textHeader}>Date</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.headerCell}>
+                  <Text style={styles.textHeader}>Expenses</Text>
+                </TouchableOpacity>
+              </View>
+            }
+            ListFooterComponent={
+              <>
+                <Text style={styles.totalExpenses}>Total Expenses: 1220</Text>
+                <View style={styles.paginationContainer}>
+                  <TouchableOpacity
+                    onPress={goToPreviousPage}
+                    style={styles.pageButton}
+                  >
+                    <Text style={styles.pageButtonText}>Previous</Text>
+                  </TouchableOpacity>
+                  <Text style={styles.pageInfo}>Page {currentPage}</Text>
+                  <TouchableOpacity
+                    onPress={goToNextPage}
+                    style={styles.pageButton}
+                  >
+                    <Text style={styles.pageButtonText}>Next</Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            }
+          />
         </View>
       </View>
     </>
@@ -749,6 +774,7 @@ export default Report;
 const styles = StyleSheet.create({
   tableContainer: {
     padding: 10,
+    paddingBottom: 42,
     borderWidth: 1,
     borderColor: "#ddd",
   },
@@ -788,7 +814,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 10,
+    marginVertical: 2.5,
     marginHorizontal: 10,
   },
   subTitle: {
@@ -823,6 +849,15 @@ const styles = StyleSheet.create({
   pageInfo: {
     alignSelf: "center",
     fontSize: 16,
+  },
+  totalExpenses: {
+    textAlign: "right",
+    fontWeight: "bold",
+    marginTop: 7,
+  },
+  textHeader: {
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });
 
