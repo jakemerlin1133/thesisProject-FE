@@ -583,7 +583,7 @@ const Report = () => {
     <View style={styles.rows}>
       <Text style={styles.cell}>{item.store_name}</Text>
       <Text style={styles.cell}>{item.category}</Text>
-      <Text style={styles.cell}>{item.date}</Text>
+      <Text style={{ padding: 5, textAlign: "center" }}>{item.date}</Text>
       <Text style={styles.cell}>{item.expenses}</Text>
     </View>
   );
