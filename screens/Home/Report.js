@@ -9,9 +9,16 @@ import {
 } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import { Colors } from "../../constants/Colors";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import * as Print from "expo-print";
 
 const Report = () => {
+  const [sortState, setSortState] = useState({
+    storeName: true,
+    category: true,
+    date: true,
+    expenses: true,
+  });
   const [selectedPrinter, setSelectedPrinter] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 9;
@@ -297,293 +304,20 @@ const Report = () => {
       date: "May, 13, 2001",
       expenses: 40,
     },
-    {
-      id: "41",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 41,
-    },
-    {
-      id: "42",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 42,
-    },
-    {
-      id: "43",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 43,
-    },
-    {
-      id: "44",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 44,
-    },
-    {
-      id: "45",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 45,
-    },
-    {
-      id: "46",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 46,
-    },
-    {
-      id: "47",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 47,
-    },
-    {
-      id: "48",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 48,
-    },
-    {
-      id: "49",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 49,
-    },
-    {
-      id: "50",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 50,
-    },
-    {
-      id: "51",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 51,
-    },
-    {
-      id: "52",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 52,
-    },
-    {
-      id: "53",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 53,
-    },
-    {
-      id: "54",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 54,
-    },
-    {
-      id: "55",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 55,
-    },
-    {
-      id: "56",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 56,
-    },
-    {
-      id: "57",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 57,
-    },
-    {
-      id: "58",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 58,
-    },
-    {
-      id: "59",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 59,
-    },
-    {
-      id: "60",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 60,
-    },
-    {
-      id: "61",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 61,
-    },
-    {
-      id: "62",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 62,
-    },
-    {
-      id: "63",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 63,
-    },
-    {
-      id: "64",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 64,
-    },
-    {
-      id: "65",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 65,
-    },
-    {
-      id: "66",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 66,
-    },
-    {
-      id: "67",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 67,
-    },
-    {
-      id: "68",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 68,
-    },
-    {
-      id: "69",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 69,
-    },
-    {
-      id: "70",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 70,
-    },
-    {
-      id: "71",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 71,
-    },
-    {
-      id: "72",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 72,
-    },
-    {
-      id: "73",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 73,
-    },
-    {
-      id: "74",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 74,
-    },
-    {
-      id: "75",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 75,
-    },
-    {
-      id: "76",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 76,
-    },
-    {
-      id: "77",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 77,
-    },
-    {
-      id: "78",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 78,
-    },
-    {
-      id: "79",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 79,
-    },
-    {
-      id: "80",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 80,
-    },
   ];
+
+  const arrangementHandler = (section) => {
+    setSortState((prevState) => ({
+      ...prevState,
+      [section]: !prevState[section],
+    }));
+  };
 
   const renderItem = ({ item }) => (
     <View style={styles.rows}>
       <Text style={styles.cell}>{item.store_name}</Text>
       <Text style={styles.cell}>{item.category}</Text>
-      <Text style={{ padding: 5, textAlign: "center" }}>{item.date}</Text>
+      <Text style={styles.cell}>{item.date}</Text>
       <Text style={styles.cell}>{item.expenses}</Text>
     </View>
   );
@@ -728,17 +462,82 @@ const Report = () => {
             contentContainerStyle={styles.tableContainer}
             ListHeaderComponent={
               <View style={styles.header}>
-                <TouchableOpacity style={styles.headerCell}>
-                  <Text style={styles.textHeader}>Store name</Text>
+                <TouchableOpacity
+                  style={styles.headerCell}
+                  onPress={() => arrangementHandler("storeName")}
+                >
+                  <View style={styles.ascendingDescendingRow}>
+                    <Text style={[styles.textHeader, { fontSize: 13 }]}>
+                      Store Name
+                    </Text>
+                    <Ionicons
+                      name={
+                        sortState.storeName
+                          ? "caret-up-outline"
+                          : "caret-down-outline"
+                      }
+                      size={16}
+                      color="#000"
+                      style={styles.icon}
+                    />
+                  </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.headerCell}>
-                  <Text style={styles.textHeader}>Category</Text>
+
+                <TouchableOpacity
+                  style={styles.headerCell}
+                  onPress={() => arrangementHandler("category")}
+                >
+                  <View style={styles.ascendingDescendingRow}>
+                    <Text style={styles.textHeader}>Category</Text>
+                    <Ionicons
+                      name={
+                        sortState.category
+                          ? "caret-up-outline"
+                          : "caret-down-outline"
+                      }
+                      size={16}
+                      color="#000"
+                      style={styles.icon}
+                    />
+                  </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.headerCell}>
-                  <Text style={styles.textHeader}>Date</Text>
+
+                <TouchableOpacity
+                  style={styles.headerCell}
+                  onPress={() => arrangementHandler("date")}
+                >
+                  <View style={styles.ascendingDescendingRow}>
+                    <Text style={[styles.textHeader]}>Date</Text>
+                    <Ionicons
+                      name={
+                        sortState.date
+                          ? "caret-up-outline"
+                          : "caret-down-outline"
+                      }
+                      size={16}
+                      color="#000"
+                      style={styles.icon}
+                    />
+                  </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.headerCell}>
-                  <Text style={styles.textHeader}>Expenses</Text>
+
+                <TouchableOpacity
+                  style={styles.headerCell}
+                  onPress={() => arrangementHandler("expenses")}
+                >
+                  <View style={styles.ascendingDescendingRow}>
+                    <Text style={[styles.textHeader]}>Expenses</Text>
+                    <Ionicons
+                      name={
+                        sortState.expenses
+                          ? "caret-up-outline"
+                          : "caret-down-outline"
+                      }
+                      size={16}
+                      color="#000"
+                      style={styles.icon}
+                    />
+                  </View>
                 </TouchableOpacity>
               </View>
             }
@@ -787,7 +586,6 @@ const styles = StyleSheet.create({
   headerCell: {
     flex: 1,
     fontWeight: "bold",
-    padding: 5,
     textAlign: "center",
   },
   rows: {
@@ -856,8 +654,14 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
   textHeader: {
+    flex: 1,
     textAlign: "center",
     fontWeight: "bold",
+    fontSize: 13,
+  },
+  ascendingDescendingRow: {
+    marginHorizontal: 5,
+    flexDirection: "row",
   },
 });
 
