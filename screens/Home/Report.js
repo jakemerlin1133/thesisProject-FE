@@ -259,7 +259,7 @@ const Report = () => {
     var table = "";
     tableData.forEach((item) => {
       table += `
-    <tr>
+    <tr>qwe
       <td>${item.store_name}</td>
       <td>${item.category}</td>
       <td>${item.date}</td>
