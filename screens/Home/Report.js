@@ -14,11 +14,10 @@ import * as Print from "expo-print";
 
 const Report = () => {
   const [sortState, setSortState] = useState({
-    storeName: true,
-    category: true,
-    date: true,
-    expenses: true,
+    activeSection: "date",
+    direction: "descending",
   });
+
   const [selectedPrinter, setSelectedPrinter] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 9;
@@ -27,290 +26,195 @@ const Report = () => {
     {
       id: "1",
       store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 1,
+      category: "Drug Store",
+      date: "May 13, 2002",
+      expenses: 241,
     },
     {
       id: "2",
       store_name: "Jollibee",
       category: "Foods",
-      date: "May, 13, 2001",
+      date: "May 14, 2001",
       expenses: 2,
     },
     {
       id: "3",
       store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
+      category: "Eatery",
+      date: "May 15, 2001",
       expenses: 3,
     },
     {
       id: "4",
       store_name: "Jollibee",
       category: "Foods",
-      date: "May, 13, 2001",
+      date: "May 16, 2001",
       expenses: 4,
     },
     {
       id: "5",
       store_name: "Jollibee",
       category: "Foods",
-      date: "May, 13, 2001",
+      date: "August 13, 2001",
       expenses: 5,
     },
     {
       id: "6",
-      store_name: "Jollibee",
+      store_name: "Mcdonals",
       category: "Foods",
-      date: "May, 13, 2001",
+      date: "May 17, 2003",
       expenses: 6,
     },
     {
       id: "7",
       store_name: "Jollibee",
       category: "Foods",
-      date: "May, 13, 2001",
+      date: "May 18, 2001",
       expenses: 7,
     },
     {
       id: "8",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
+      store_name: "Ace",
+      category: "Hardware",
+      date: "May 13, 2001",
       expenses: 8,
     },
     {
       id: "9",
       store_name: "Jollibee",
       category: "Foods",
-      date: "May, 13, 2001",
+      date: "May 13, 2001",
       expenses: 9,
     },
     {
       id: "10",
       store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 10,
+      category: "Botique",
+      date: "May 13, 2001",
+      expenses: 1120,
     },
     {
       id: "11",
       store_name: "Jollibee",
       category: "Foods",
-      date: "May, 13, 2001",
+      date: "January 13, 2009",
       expenses: 11,
     },
     {
       id: "12",
       store_name: "Jollibee",
       category: "Foods",
-      date: "May, 13, 2001",
+      date: "December 14, 2009",
       expenses: 12,
     },
     {
       id: "13",
       store_name: "Jollibee",
       category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 13,
+      date: "April 13, 2001",
+      expenses: 1233,
     },
     {
       id: "14",
       store_name: "Jollibee",
       category: "Foods",
-      date: "May, 13, 2001",
+      date: "December 13, 2009",
       expenses: 14,
     },
     {
       id: "15",
       store_name: "Jollibee",
       category: "Foods",
-      date: "May, 13, 2001",
+      date: "May 19, 2009",
       expenses: 15,
     },
     {
       id: "16",
       store_name: "Jollibee",
       category: "Foods",
-      date: "May, 13, 2001",
+      date: "May 14, 2003",
       expenses: 16,
     },
     {
       id: "17",
       store_name: "Jollibee",
       category: "Foods",
-      date: "May, 13, 2001",
+      date: "May 13, 2001",
       expenses: 17,
-    },
-    {
-      id: "18",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 18,
-    },
-    {
-      id: "19",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 19,
-    },
-    {
-      id: "20",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 20,
-    },
-    {
-      id: "21",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 21,
-    },
-    {
-      id: "22",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 22,
-    },
-    {
-      id: "23",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 23,
-    },
-    {
-      id: "24",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 24,
-    },
-    {
-      id: "25",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 25,
-    },
-    {
-      id: "26",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 26,
-    },
-    {
-      id: "27",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 27,
-    },
-    {
-      id: "28",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 28,
-    },
-    {
-      id: "29",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 29,
-    },
-    {
-      id: "30",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 30,
-    },
-    {
-      id: "31",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 31,
-    },
-    {
-      id: "32",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 32,
-    },
-    {
-      id: "33",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 33,
-    },
-    {
-      id: "34",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 34,
-    },
-    {
-      id: "35",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 35,
-    },
-    {
-      id: "36",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 36,
-    },
-    {
-      id: "37",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 37,
-    },
-    {
-      id: "38",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 38,
-    },
-    {
-      id: "39",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 39,
-    },
-    {
-      id: "40",
-      store_name: "Jollibee",
-      category: "Foods",
-      date: "May, 13, 2001",
-      expenses: 40,
     },
   ];
 
   const arrangementHandler = (section) => {
     setSortState((prevState) => ({
-      ...prevState,
-      [section]: !prevState[section],
+      activeSection: section,
+      direction:
+        prevState.activeSection === section &&
+        prevState.direction === "ascending"
+          ? "descending"
+          : "ascending",
     }));
+    setCurrentPage(1);
+  };
+
+  const isAscending = (section) => {
+    return (
+      sortState.activeSection === section && sortState.direction === "ascending"
+    );
+  };
+
+  const getSortedData = () => {
+    const sortedData = [...tableData];
+    if (sortState.activeSection) {
+      sortedData.sort((a, b) => {
+        const field = sortState.activeSection;
+        const dir = sortState.direction === "ascending" ? 1 : -1;
+
+        if (field === "date") {
+          const parseDate = (dateStr) => {
+            const dateParts = dateStr.trim().split(/\s+/);
+            const monthStr = dateParts[0];
+            const dayYear = dateParts.slice(1).join(" ");
+            const [day, year] = dayYear.split(",");
+            const monthName = monthStr.trim();
+
+            const monthMap = {
+              January: 0,
+              February: 1,
+              March: 2,
+              April: 3,
+              May: 4,
+              June: 5,
+              July: 6,
+              August: 7,
+              September: 8,
+              October: 9,
+              November: 10,
+              December: 11,
+            };
+
+            const month = monthMap[monthName];
+
+            const dayOfMonth = parseInt(day, 10);
+            const fullYear = parseInt(year, 10);
+
+            // Return a new Date object using parsed values
+            return new Date(fullYear, month, dayOfMonth);
+          };
+
+          const dateA = parseDate(a[field]);
+          const dateB = parseDate(b[field]);
+
+          return dir * (dateA - dateB);
+        }
+
+        if (typeof a[field] === "string") {
+          return dir * a[field].localeCompare(b[field]);
+        }
+
+        return dir * (a[field] - b[field]);
+      });
+    }
+    return sortedData;
   };
 
   const renderItem = ({ item }) => (
@@ -322,7 +226,7 @@ const Report = () => {
     </View>
   );
 
-  const paginatedData = tableData.slice(
+  const paginatedData = getSortedData().slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );
@@ -464,15 +368,13 @@ const Report = () => {
               <View style={styles.header}>
                 <TouchableOpacity
                   style={styles.headerCell}
-                  onPress={() => arrangementHandler("storeName")}
+                  onPress={() => arrangementHandler("store_name")}
                 >
                   <View style={styles.ascendingDescendingRow}>
-                    <Text style={[styles.textHeader, { fontSize: 13 }]}>
-                      Store Name
-                    </Text>
+                    <Text style={styles.textHeader}>Store Name</Text>
                     <Ionicons
                       name={
-                        sortState.storeName
+                        isAscending("storeName")
                           ? "caret-up-outline"
                           : "caret-down-outline"
                       }
@@ -491,7 +393,7 @@ const Report = () => {
                     <Text style={styles.textHeader}>Category</Text>
                     <Ionicons
                       name={
-                        sortState.category
+                        isAscending("category")
                           ? "caret-up-outline"
                           : "caret-down-outline"
                       }
@@ -510,7 +412,7 @@ const Report = () => {
                     <Text style={[styles.textHeader]}>Date</Text>
                     <Ionicons
                       name={
-                        sortState.date
+                        isAscending("date")
                           ? "caret-up-outline"
                           : "caret-down-outline"
                       }
@@ -529,7 +431,7 @@ const Report = () => {
                     <Text style={[styles.textHeader]}>Expenses</Text>
                     <Ionicons
                       name={
-                        sortState.expenses
+                        isAscending("expenses")
                           ? "caret-up-outline"
                           : "caret-down-outline"
                       }
