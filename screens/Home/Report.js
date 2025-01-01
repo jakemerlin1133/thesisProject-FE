@@ -255,8 +255,6 @@ const Report = () => {
     setSelectedPrinter(printer);
   };
 
-  const array = new Array(10).fill("Row");
-
   const createDynamicTable = () => {
     var table = "";
     tableData.forEach((item) => {
