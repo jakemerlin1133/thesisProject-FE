@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -19,8 +19,13 @@ const Report = () => {
   });
 
   const [selectedPrinter, setSelectedPrinter] = useState();
+
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 9;
+
+  // State for month and year selection
+  const [selectedMonth, setSelectedMonth] = useState("All");
+  const [selectedYear, setSelectedYear] = useState("All");
 
   const tableData = [
     {
@@ -41,14 +46,14 @@ const Report = () => {
       id: "3",
       store_name: "Jollibee",
       category: "Eatery",
-      date: "May 15, 2001",
+      date: "March 15, 2001",
       expenses: 3,
     },
     {
       id: "4",
       store_name: "Jollibee",
       category: "Foods",
-      date: "May 16, 2001",
+      date: "February 16, 2001",
       expenses: 4,
     },
     {
@@ -62,7 +67,7 @@ const Report = () => {
       id: "6",
       store_name: "Mcdonals",
       category: "Foods",
-      date: "May 17, 2003",
+      date: "June 17, 2010",
       expenses: 6,
     },
     {
@@ -144,6 +149,49 @@ const Report = () => {
     },
   ];
 
+  const extractUniqueYears = (data) => {
+    const parseDate = (dateStr) => {
+      const dateParts = dateStr.trim().split(/\s+/);
+      const monthStr = dateParts[0];
+      const dayYear = dateParts.slice(1).join(" ");
+      const [day, year] = dayYear.split(",");
+      const monthName = monthStr.trim();
+
+      const monthMap = {
+        January: 0,
+        February: 1,
+        March: 2,
+        April: 3,
+        May: 4,
+        June: 5,
+        July: 6,
+        August: 7,
+        September: 8,
+        October: 9,
+        November: 10,
+        December: 11,
+      };
+
+      const month = monthMap[monthName];
+      const dayOfMonth = parseInt(day, 10);
+      const fullYear = parseInt(year, 10);
+
+      return new Date(fullYear, month, dayOfMonth);
+    };
+
+    const years = data.map((item) => {
+      const parsedDate = parseDate(item.date);
+      return parsedDate.getFullYear();
+    });
+
+    const uniqueYears = [...new Set(years)].sort((a, b) => b - a);
+
+    return uniqueYears.map((year) => ({
+      label: String(year),
+      value: String(year),
+    }));
+  };
+
   const arrangementHandler = (section) => {
     setSortState((prevState) => ({
       activeSection: section,
@@ -164,43 +212,25 @@ const Report = () => {
 
   const getSortedData = () => {
     const sortedData = [...tableData];
+
+    const filteredData = sortedData.filter((item) => {
+      const itemDate = parseDate(item.date);
+      const itemMonth = itemDate.toLocaleString("default", { month: "long" });
+      const itemYear = itemDate.getFullYear().toString();
+
+      const isMonthMatch =
+        selectedMonth === "All" || itemMonth === selectedMonth;
+      const isYearMatch = selectedYear === "All" || itemYear === selectedYear;
+
+      return isMonthMatch && isYearMatch;
+    });
+
     if (sortState.activeSection) {
-      sortedData.sort((a, b) => {
+      filteredData.sort((a, b) => {
         const field = sortState.activeSection;
         const dir = sortState.direction === "ascending" ? 1 : -1;
 
         if (field === "date") {
-          const parseDate = (dateStr) => {
-            const dateParts = dateStr.trim().split(/\s+/);
-            const monthStr = dateParts[0];
-            const dayYear = dateParts.slice(1).join(" ");
-            const [day, year] = dayYear.split(",");
-            const monthName = monthStr.trim();
-
-            const monthMap = {
-              January: 0,
-              February: 1,
-              March: 2,
-              April: 3,
-              May: 4,
-              June: 5,
-              July: 6,
-              August: 7,
-              September: 8,
-              October: 9,
-              November: 10,
-              December: 11,
-            };
-
-            const month = monthMap[monthName];
-
-            const dayOfMonth = parseInt(day, 10);
-            const fullYear = parseInt(year, 10);
-
-            // Return a new Date object using parsed values
-            return new Date(fullYear, month, dayOfMonth);
-          };
-
           const dateA = parseDate(a[field]);
           const dateB = parseDate(b[field]);
 
@@ -214,7 +244,35 @@ const Report = () => {
         return dir * (a[field] - b[field]);
       });
     }
-    return sortedData;
+    return filteredData;
+  };
+
+  const parseDate = (dateStr) => {
+    const dateParts = dateStr.trim().split(/\s+/);
+    const monthStr = dateParts[0];
+    const dayYear = dateParts.slice(1).join(" ");
+    const [day, year] = dayYear.split(",");
+    const monthName = monthStr.trim();
+
+    const monthMap = {
+      January: 0,
+      February: 1,
+      March: 2,
+      April: 3,
+      May: 4,
+      June: 5,
+      July: 6,
+      August: 7,
+      September: 8,
+      October: 9,
+      November: 10,
+      December: 11,
+    };
+
+    const month = monthMap[monthName];
+    const dayOfMonth = parseInt(day, 10);
+    const fullYear = parseInt(year, 10);
+    return new Date(fullYear, month, dayOfMonth);
   };
 
   const renderItem = ({ item }) => (
@@ -226,13 +284,16 @@ const Report = () => {
     </View>
   );
 
-  const paginatedData = getSortedData().slice(
+  const filteredData = getSortedData();
+  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+
+  const paginatedData = filteredData.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );
 
   const goToNextPage = () => {
-    if (currentPage * rowsPerPage < tableData.length) {
+    if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -242,6 +303,10 @@ const Report = () => {
       setCurrentPage(currentPage - 1);
     }
   };
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedMonth, selectedYear]);
 
   const print = async () => {
     await Print.printAsync({
@@ -298,37 +363,37 @@ const Report = () => {
     return html;
   };
 
+  const years = extractUniqueYears(tableData);
+
+  months = [
+    { label: "January", value: "January" },
+    { label: "February", value: "February" },
+    { label: "March", value: "March" },
+    { label: "April", value: "April" },
+    { label: "May", value: "May" },
+    { label: "June", value: "June" },
+    { label: "July", value: "July" },
+    { label: "August", value: "August" },
+    { label: "September", value: "September" },
+    { label: "October", value: "October" },
+    { label: "November", value: "November" },
+    { label: "December", value: "December" },
+  ];
   return (
     <>
       <View style={styles.row}>
         <RNPickerSelect
-          onValueChange={(value) => console.log(value)}
-          value="December"
-          items={[
-            { label: "January", value: "January" },
-            { label: "February", value: "February" },
-            { label: "March", value: "March" },
-            { label: "April", value: "April" },
-            { label: "May", value: "May" },
-            { label: "June", value: "June" },
-            { label: "July", value: "July" },
-            { label: "August", value: "August" },
-            { label: "September", value: "September" },
-            { label: "October", value: "October" },
-            { label: "November", value: "November" },
-            { label: "December", value: "December" },
-          ]}
-          placeholder={{ label: "Month", value: null }}
+          onValueChange={(value) => setSelectedMonth(value)}
+          value={selectedMonth}
+          items={months}
+          placeholder={{ label: "All", value: "All" }}
           style={pickerStyles}
         />
         <RNPickerSelect
-          onValueChange={(value) => console.log(value)}
-          value="2024"
-          items={[
-            { label: "2024", value: "2024" },
-            { label: "2023", value: "2023" },
-          ]}
-          placeholder={{ label: "Year", value: null }}
+          onValueChange={(value) => setSelectedYear(value)}
+          value={selectedYear}
+          items={years}
+          placeholder={{ label: "All", value: "All" }}
           style={pickerStyles}
         />
 
