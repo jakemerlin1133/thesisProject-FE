@@ -316,8 +316,12 @@ const Report = () => {
   }, [selectedMonth, selectedYear]);
 
   const print = async () => {
+    const filteredData = getSortedData();
+
+    const htmlContent = createDynamicTable(filteredData);
+
     await Print.printAsync({
-      html: createDynamicTable(),
+      html: htmlContent,
       printerUrl: selectedPrinter?.url,
     });
   };
@@ -327,9 +331,9 @@ const Report = () => {
     setSelectedPrinter(printer);
   };
 
-  const createDynamicTable = () => {
+  const createDynamicTable = (filteredData) => {
     var table = "";
-    tableData.forEach((item) => {
+    filteredData.forEach((item) => {
       table += `
     <tr>
       <td>${item.store_name}</td>
@@ -350,8 +354,8 @@ const Report = () => {
     </style>
   </head>
   <body style="text-align: center;">
+  <h1>Expenses Report</h1>
    <table border="1" style="width: 100%; text-align: center; border-collapse: collapse;">
-<h1>Expenses Report</h1>
     <thead>
           <tr>
             <th>Store Name</th>
