@@ -147,6 +147,13 @@ const Report = () => {
       date: "May 13, 2001",
       expenses: 17,
     },
+    {
+      id: "18",
+      store_name: "Jollibee",
+      category: "Foods",
+      date: "May 13, 2001",
+      expenses: 17,
+    },
   ];
 
   const extractUniqueYears = (data) => {
