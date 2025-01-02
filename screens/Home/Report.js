@@ -292,6 +292,13 @@ const Report = () => {
   );
 
   const filteredData = getSortedData();
+
+  const calculateTotalExpenses = (filteredData) => {
+    return filteredData.reduce((total, item) => total + item.expenses, 0);
+  };
+
+  const totalExpenses = calculateTotalExpenses(filteredData);
+
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
   const paginatedData = filteredData.slice(
@@ -519,7 +526,9 @@ const Report = () => {
             }
             ListFooterComponent={
               <>
-                <Text style={styles.totalExpenses}>Total Expenses: 1220</Text>
+                <Text style={styles.totalExpenses}>
+                  Total Expenses:{totalExpenses}
+                </Text>
                 <View style={styles.paginationContainer}>
                   <TouchableOpacity
                     onPress={goToPreviousPage}
