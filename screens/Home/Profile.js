@@ -1,10 +1,28 @@
 import React from "react";
 import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../../constants/Colors";
 
-const Profile = ({ route }) => {
+const Profile = ({ route, navigation }) => {
   const { userId } = route.params;
+
+  const logoutHandler = async () => {
+    try {
+      const response = await axios.get(
+        "http://192.168.18.10:8000/expensense/logout/"
+      );
+
+      if (response.status === 200) {
+        await AsyncStorage.removeItem("userId");
+        navigation.replace("Login");
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
+
   return (
     <>
       <View style={styles.profileContainer}>
@@ -21,10 +39,7 @@ const Profile = ({ route }) => {
       </View>
 
       <View style={styles.listOptions}>
-        <TouchableOpacity
-          style={styles.logoutButton}
-          onPress={() => alert("Logged out")}
-        >
+        <TouchableOpacity style={styles.logoutButton} onPress={logoutHandler}>
           <Ionicons name="log-out-outline" size={30} style={styles.icon} />
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>

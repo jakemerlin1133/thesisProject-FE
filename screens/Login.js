@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import {
   StyleSheet,
   Text,
@@ -6,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   useWindowDimensions,
+  ActivityIndicator,
 } from "react-native";
 
 import { Colors } from "../constants/Colors";
@@ -20,6 +23,7 @@ const Login = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMEssage, setErrorMessage] = useState("");
+
   const submitHandler = async () => {
     try {
       const response = await axios.post(
@@ -31,9 +35,8 @@ const Login = ({ navigation }) => {
       );
       if (response.status === 200) {
         const userId = response.data.user.id;
-        navigation.navigate("DashboardTabs", {
-          userId,
-        });
+        await AsyncStorage.setItem("userId", userId.toString());
+        navigation.replace("DashboardTabs", { userId });
       }
     } catch (error) {
       setErrorMessage("Invalid Username or Password.");
