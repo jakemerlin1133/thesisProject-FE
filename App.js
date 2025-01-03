@@ -55,14 +55,12 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           {userId ? (
-            <>
-              <Stack.Screen
-                name="DashboardTabs"
-                component={BottomTabNavigator}
-                initialParams={{ userId }}
-                options={{ headerShown: false }}
-              />
-            </>
+            <Stack.Screen
+              name="LoggedDashboardTabs"
+              component={BottomTabNavigator}
+              initialParams={{ userId }}
+              options={{ headerShown: false }}
+            />
           ) : (
             <Stack.Screen
               name="FailedLogin"
@@ -89,6 +87,12 @@ export default function App() {
             name="TermsAndConditions"
             component={TermsAndConditions}
             options={{ headerShown: false, animation: "none" }}
+          />
+          <Stack.Screen
+            name="DashboardTabs"
+            component={BottomTabNavigator}
+            initialParams={{ userId }}
+            options={{ headerShown: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>

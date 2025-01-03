@@ -145,14 +145,22 @@ const Register = () => {
     if (!confirmPasswordSubmit) {
       errors.confirmPassword = "Confirm password is empty.";
     }
-    if (passwordSubmit === confirmPasswordSubmit) {
+
+    if (
+      passwordSubmit === confirmPasswordSubmit &&
+      passwordSubmit != "" &&
+      confirmPasswordSubmit != ""
+    ) {
       if (passwordSubmit.length < 8 || confirmPasswordSubmit.length < 8) {
         errors.shortPassword =
           "Your password must be at least 8 characters long and can include letters or numbers.";
       }
-    } else {
+    }
+
+    if (passwordSubmit != confirmPasswordSubmit) {
       errors.passwordVerification = "Password does not match.";
     }
+
     if (!isChecked) {
       errors.termsAndConditions = "You must accept the Terms and Conditions.";
     }
