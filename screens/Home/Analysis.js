@@ -1,13 +1,30 @@
 import { View, StyleSheet, ScrollView, Text } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import PieChartAnalysis from "../../components/Charts/PieChartAnalysis";
+import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../../constants/Colors";
 
-const Analysis = () => {
+const Analysis = ({ route }) => {
+  const { userId } = route.params;
   return (
     <>
       <View style={styles.chartContainer}>
         <ScrollView>
+          <Text style={[styles.title, { fontSize: 30 }]}>Prediction</Text>
+          <View style={styles.predictionContainer}>
+            <Text style={styles.predictionText}>
+              Your estimated expenses for the next month are{" "}
+              <Text style={{ fontSize: 19 }}>
+                1550.
+                <Ionicons
+                  name="arrow-up-outline"
+                  size={20}
+                  style={styles.icon}
+                />
+              </Text>
+            </Text>
+          </View>
+
           <Text style={styles.title}>
             "Comparison of Expense Categories: This Month and Chosen Month"
           </Text>
@@ -63,6 +80,27 @@ const styles = StyleSheet.create({
   chartContainer: {
     flex: 1,
     marginHorizontal: 15,
+  },
+  predictionContainer: {
+    paddingVertical: 40,
+    marginVertical: 15,
+    backgroundColor: Colors.brown500,
+    fontWeight: "bold",
+    borderRadius: 15,
+  },
+  icon: {
+    textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#f51b22",
+    fontWeight: "bold",
+  },
+  predictionText: {
+    fontSize: 12,
+    padding: 12,
+    fontWeight: "bold",
+    color: Colors.brown100,
+    textAlign: "center",
   },
   title: {
     textAlign: "center",

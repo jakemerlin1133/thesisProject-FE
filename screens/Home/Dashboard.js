@@ -14,7 +14,7 @@ import { Colors } from "../../constants/Colors";
 import ListOfExpensesCategory from "../../components/ListOfExpensesCategory";
 
 const Dashboard = ({ route }) => {
-  // const { userId } = route.params;
+  const { userId } = route.params;
   const [selectedChart, setSelectedChart] = useState(null);
 
   return (

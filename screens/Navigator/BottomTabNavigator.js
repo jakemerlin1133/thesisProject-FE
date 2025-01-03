@@ -10,8 +10,8 @@ import Analysis from "../Home/Analysis";
 
 const Tab = createBottomTabNavigator();
 
-export default function BottomTabNavigator() {
-  // const { userId } = route.params;
+export default function BottomTabNavigator({ route }) {
+  const { userId } = route.params;
   return (
     <Tab.Navigator
       screenOptions={{
@@ -34,7 +34,7 @@ export default function BottomTabNavigator() {
       <Tab.Screen
         name="Dashboard"
         component={Dashboard}
-        // initialParams={{ userId }}
+        initialParams={{ userId }}
         options={{
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="home" color={color} size={size} />;
@@ -56,7 +56,7 @@ export default function BottomTabNavigator() {
       <Tab.Screen
         name="Analysis"
         component={Analysis}
-        // initialParams={{ userId }}
+        initialParams={{ userId }}
         options={{
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="stats-chart" color={color} size={size} />;
@@ -67,7 +67,7 @@ export default function BottomTabNavigator() {
       <Tab.Screen
         name="Report"
         component={Report}
-        // initialParams={{ userId }}
+        initialParams={{ userId }}
         options={{
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="newspaper" color={color} size={size} />;
@@ -77,7 +77,7 @@ export default function BottomTabNavigator() {
       <Tab.Screen
         name="Profile"
         component={Profile}
-        // initialParams={{ userId }}
+        initialParams={{ userId }}
         options={{
           tabBarIcon: ({ color, size }) => {
             return <Ionicons name="person" color={color} size={size} />;
