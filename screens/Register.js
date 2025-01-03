@@ -417,7 +417,10 @@ const Register = () => {
               </TouchableOpacity>
               <Text style={styles.termsAndConiditonText}>I accept the </Text>
               <TouchableOpacity>
-                <Text style={styles.termsAndConiditonLink}>
+                <Text
+                  style={styles.termsAndConiditonLink}
+                  onPress={() => navigation.navigate("TermsAndConditions")}
+                >
                   Terms and Conditions.
                 </Text>
               </TouchableOpacity>

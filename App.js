@@ -9,6 +9,7 @@ import Login from "./screens/Login";
 import Register from "./screens/Register";
 import SuccessRegister from "./screens/SuccessRegister";
 import BottomTabNavigator from "./screens/Navigator/BottomTabNavigator";
+import TermsAndConditions from "./screens/TermsAndConditions";
 
 const Stack = createStackNavigator();
 
@@ -33,15 +34,6 @@ export default function App() {
     checkAuthState();
   }, []);
 
-  const handleLogin = async (userId) => {
-    try {
-      await AsyncStorage.setItem("userId", userId); // Save userId to AsyncStorage
-      setUserId(userId); // Update the state with the userId
-    } catch (error) {
-      console.error("Error during login:", error);
-    }
-  };
-
   if (isLoading) {
     return (
       <View
@@ -63,30 +55,20 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           {userId ? (
-            <Stack.Screen
-              name="DashboardTabs"
-              component={BottomTabNavigator}
-              initialParams={{ userId }}
-              options={{ headerShown: false }}
-            />
-          ) : (
             <>
               <Stack.Screen
-                name="Login"
-                component={Login}
+                name="DashboardTabs"
+                component={BottomTabNavigator}
+                initialParams={{ userId }}
                 options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="Register"
-                component={Register}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="SuccessRegister"
-                component={SuccessRegister}
-                options={{ headerShown: false, animation: "none" }}
               />
             </>
+          ) : (
+            <Stack.Screen
+              name="FailedLogin"
+              component={Login}
+              options={{ headerShown: false }}
+            />
           )}
           <Stack.Screen
             name="Login"
@@ -101,6 +83,11 @@ export default function App() {
           <Stack.Screen
             name="SuccessRegister"
             component={SuccessRegister}
+            options={{ headerShown: false, animation: "none" }}
+          />
+          <Stack.Screen
+            name="TermsAndConditions"
+            component={TermsAndConditions}
             options={{ headerShown: false, animation: "none" }}
           />
         </Stack.Navigator>
