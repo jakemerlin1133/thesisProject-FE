@@ -93,6 +93,16 @@ export default function App() {
             component={Login}
             options={{ headerShown: false }}
           />
+          <Stack.Screen
+            name="Register"
+            component={Register}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SuccessRegister"
+            component={SuccessRegister}
+            options={{ headerShown: false, animation: "none" }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>

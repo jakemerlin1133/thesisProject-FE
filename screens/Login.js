@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BASE_URL } from "../config";
 
 import {
   StyleSheet,
@@ -8,7 +9,6 @@ import {
   TextInput,
   TouchableOpacity,
   useWindowDimensions,
-  ActivityIndicator,
 } from "react-native";
 
 import { Colors } from "../constants/Colors";
@@ -26,13 +26,10 @@ const Login = ({ navigation }) => {
 
   const submitHandler = async () => {
     try {
-      const response = await axios.post(
-        "http://192.168.18.10:8000/expensense/login/",
-        {
-          user_name: username,
-          password: password,
-        }
-      );
+      const response = await axios.post(`${BASE_URL}/expensense/login/`, {
+        user_name: username,
+        password: password,
+      });
       if (response.status === 200) {
         const userId = response.data.user.id;
         await AsyncStorage.setItem("userId", userId.toString());

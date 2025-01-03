@@ -4,15 +4,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../../constants/Colors";
+import { BASE_URL } from "../../config";
 
 const Profile = ({ route, navigation }) => {
-  const { userId } = route.params;
-
   const logoutHandler = async () => {
     try {
-      const response = await axios.get(
-        "http://192.168.18.10:8000/expensense/logout/"
-      );
+      const response = await axios.get(`${BASE_URL}/expensense/logout/`);
 
       if (response.status === 200) {
         await AsyncStorage.removeItem("userId");

@@ -1,14 +1,5 @@
 import React, { useState } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  Dimensions,
-  ScrollView,
-  TouchableOpacity,
-  ImageBackground,
-} from "react-native";
-import Background from "../../components/Background";
+import { Text, View, StyleSheet } from "react-native";
 import { Colors } from "../../constants/Colors";
 
 import ListOfExpensesCategory from "../../components/ListOfExpensesCategory";

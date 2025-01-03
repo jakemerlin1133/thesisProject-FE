@@ -12,6 +12,7 @@ import {
 import RNPickerSelect from "react-native-picker-select";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Ionicons } from "react-native-vector-icons";
+import { BASE_URL } from "../config";
 
 import { Colors } from "../constants/Colors";
 import Background from "../components/Background";
@@ -171,7 +172,7 @@ const Register = () => {
       };
       try {
         const response = await axios.post(
-          "http://192.168.18.10:8000/expensense/users/",
+          `${BASE_URL}/expensense/users/`,
           userData
         );
         console.log("User registered:", response.data);
