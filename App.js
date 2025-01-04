@@ -11,6 +11,8 @@ import SuccessRegister from "./screens/SuccessRegister";
 import BottomTabNavigator from "./screens/Navigator/BottomTabNavigator";
 import TermsAndConditions from "./screens/TermsAndConditions";
 
+import { Color, Colors } from "./constants/Colors";
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -86,7 +88,14 @@ export default function App() {
           <Stack.Screen
             name="TermsAndConditions"
             component={TermsAndConditions}
-            options={{ headerShown: false, animation: "none" }}
+            options={{
+              animation: "none",
+              headerStyle: {
+                backgroundColor: Colors.brown500,
+              },
+              headerTintColor: Colors.brown100,
+              title: "Terms and Conditions",
+            }}
           />
           <Stack.Screen
             name="DashboardTabs"
