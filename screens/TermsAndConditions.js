@@ -6,57 +6,66 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
+import { Colors } from "../constants/Colors";
 
 const TermsAndConditions = () => {
+  const navigation = useNavigation();
   return (
     <>
       <ScrollView>
         <View style={styles.termsAndConditionContainer}>
-          <View style={styles.introductionContainer}>
-            <Text>Introduction</Text>
-            <Text>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.title}>1. Introduction</Text>
+            <Text style={styles.sectionContent}>
               This End User License Agreement is a legal agreement between you
-              and Expensense for the use of the Expensense application,
-              including any associated media, documentation, updates, and
-              support services . By installing or using the Software, you agree
-              to be bound by the terms of this Agreement. If you do not agree
-              with these terms, please do not use the application.
+              and owner for the use of the Expensense application, including any
+              associated media, documentation, updates, and support services .
+              By installing or using the Software, you agree to be bound by the
+              terms of this Agreement. If you do not agree with these terms,
+              please do not use the application.
             </Text>
           </View>
 
-          <View>
-            <Text>Grant of License</Text>
-            <Text>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.title}>2. Grant of License</Text>
+            <Text style={styles.bulletStyle}>
               The Licensor grants you a limited, non-exclusive,
               non-transferable, and revocable license to use the Software solely
               for personal or internal business purposes.
             </Text>
-            <Text>
+            <Text style={styles.bulletStyle}>
               You may not sublicense, sell, or distribute the Software to any
               third party without prior written consent from the Licensor.
             </Text>
           </View>
 
-          <View>
-            <Text>Restrictions on Use</Text>
-            <Text>
-              Copy, modify, or create derivative works of the Software.
+          <View style={styles.sectionContainer}>
+            <Text style={styles.title}>3. Restrictions on Use</Text>
+            <Text style={styles.bulletStyle}>
+              {"\u2022"} Copy, modify, or create derivative works of the
+              Software.
             </Text>
-            <Text>
-              Reverse-engineer, decompile, or disassemble the Software.
+            <Text style={styles.bulletStyle}>
+              {"\u2022"} Reverse-engineer, decompile, or disassemble the
+              Software.
             </Text>
-            <Text>
-              Use the Software for unlawful purposes or in violation of any
-              applicable laws or regulations.
+            <Text style={styles.bulletStyle}>
+              {"\u2022"} Use the Software for unlawful purposes or in violation
+              of any applicable laws or regulations.
             </Text>
-            <Text>Rent, lease, lend, or resell the Software.</Text>
-            <Text>
-              Circumvent or disable any security features of the Software.
+            <Text style={styles.bulletStyle}>
+              {"\u2022"} Rent, lease, lend, or resell the Software.
+            </Text>
+            <Text style={styles.bulletStyle}>
+              {"\u2022"} Circumvent or disable any security features of the
+              Software.
             </Text>
           </View>
 
-          <View>
-            <Text>Ownership</Text>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.title}>4. Ownership</Text>
             <Text>
               The Software is licensed, not sold. The Licensor retains all
               rights, title, and interest in and to the Software, including but
@@ -68,40 +77,45 @@ const TermsAndConditions = () => {
             </Text>
           </View>
 
-          <View>
-            <Text>Updates and Maintenance</Text>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.title}>5. Updates and Maintenance</Text>
             <Text>
               The Licensor may provide updates or patches to improve or modify
               the Software. These updates are governed by the terms of this
               Agreement unless accompanied by a separate agreement.
             </Text>
             <Text>
-              he Licensor is under no obligation to provide support or
+              The Licensor is under no obligation to provide support or
               maintenance services for the Software.
             </Text>
           </View>
 
-          <View>
-            <Text>Data Collection and Privacy</Text>
-            <Text>
-              The Software may collect data as described in the Licensor's
-            </Text>
-            <TouchableOpacity>
-              <Text>Privacy Policy.</Text>
-            </TouchableOpacity>
-            <Text>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.title}>6. Data Collection and Privacy</Text>
+            <Text style={{ lineHeight: 24 }}>
+              The Software may collect data as described in the Licensor's{" "}
+              <TouchableOpacity
+                onPress={() => navigation.navigate("PrivacyPolicy")}
+              >
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    color: Colors.brown500,
+                    lineHeight: 24,
+                    marginBottom: -7,
+                  }}
+                >
+                  Privacy Policy.
+                </Text>
+              </TouchableOpacity>{" "}
               By using the Software, you consent to such data collection and
-              processing.
-            </Text>
-
-            <Text>
-              You are responsible for ensuring that your use of the Software
-              complies with all applicable data protection laws.
+              processing. You are responsible for ensuring that your use of the
+              Software complies with all applicable data protection laws.
             </Text>
           </View>
 
-          <View>
-            <Text>Limitation of Liability</Text>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.title}>7. Limitation of Liability</Text>
             <Text>
               The Software is provided "as is" without any warranties, express
               or implied, including but not limited to implied warranties of
@@ -114,8 +128,8 @@ const TermsAndConditions = () => {
             </Text>
           </View>
 
-          <View>
-            <Text>Termination</Text>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.title}>8. Termination</Text>
             <Text>
               This Agreement is effective until terminated. The Licensor may
               terminate this Agreement immediately if you fail to comply with
@@ -127,8 +141,8 @@ const TermsAndConditions = () => {
             </Text>
           </View>
 
-          <View>
-            <Text>Governing Law</Text>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.title}>9. Governing Law</Text>
             <Text>
               This Agreement shall be governed by the laws of Philippines. Any
               disputes arising under or in connection with this Agreement shall
@@ -142,8 +156,8 @@ const TermsAndConditions = () => {
             </View>
           </View>
 
-          <View>
-            <Text>Entire Agreement</Text>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.title}>10. Entire Agreement</Text>
             <Text>
               This Agreement constitutes the entire agreement between you and
               the Licensor regarding the Software and supersedes all prior
@@ -151,11 +165,19 @@ const TermsAndConditions = () => {
             </Text>
           </View>
 
-          <View>
-            <Text>Contact Information</Text>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.title}>11. Contact Information</Text>
             <Text>
               If you have any questions or concerns about this Agreement, please
-              contact us at jakemerlin010218@gmail.com .
+              contact us at jakemerlin010218@gmail.com.
+            </Text>
+          </View>
+          <View style={{ marginTop: 20, marginBottom: 50, marginLeft: 15 }}>
+            <Text>
+              <Text style={{ fontWeight: "bold", color: Colors.brown500 }}>
+                Effective Date:
+              </Text>{" "}
+              January 5, 2025
             </Text>
           </View>
         </View>
@@ -168,7 +190,18 @@ export default TermsAndConditions;
 
 const styles = StyleSheet.create({
   termsAndConditionContainer: {
-    padding: 10,
+    padding: 20,
   },
-  introductionContainer: {},
+  sectionContainer: {
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 23,
+    fontWeight: "bold",
+    color: Colors.brown500,
+    marginBottom: 7,
+  },
+  bulletStyle: {
+    marginBottom: 3,
+  },
 });

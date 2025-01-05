@@ -10,6 +10,7 @@ import Register from "./screens/Register";
 import SuccessRegister from "./screens/SuccessRegister";
 import BottomTabNavigator from "./screens/Navigator/BottomTabNavigator";
 import TermsAndConditions from "./screens/TermsAndConditions";
+import PrivacyPolicy from "./screens/PrivacyPolicy";
 
 import { Color, Colors } from "./constants/Colors";
 
@@ -95,6 +96,18 @@ export default function App() {
               },
               headerTintColor: Colors.brown100,
               title: "Terms and Conditions",
+            }}
+          />
+          <Stack.Screen
+            name="PrivacyPolicy"
+            component={PrivacyPolicy}
+            options={{
+              animation: "none",
+              headerStyle: {
+                backgroundColor: Colors.brown500,
+              },
+              headerTintColor: Colors.brown100,
+              title: "Privacy Policy",
             }}
           />
           <Stack.Screen
