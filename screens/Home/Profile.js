@@ -9,7 +9,7 @@ import { BASE_URL } from "../../config";
 const Profile = ({ route, navigation }) => {
   const logoutHandler = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/expensense/logout/`);
+      const response = await axios.get(`${BASE_URL}/logout/`);
 
       if (response.status === 200) {
         await AsyncStorage.removeItem("userId");

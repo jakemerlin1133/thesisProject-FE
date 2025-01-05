@@ -26,7 +26,7 @@ const Login = ({ navigation }) => {
 
   const submitHandler = async () => {
     try {
-      const response = await axios.post(`${BASE_URL}/expensense/login/`, {
+      const response = await axios.post(`${BASE_URL}/login/`, {
         user_name: username,
         password: password,
       });

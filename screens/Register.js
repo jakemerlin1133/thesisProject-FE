@@ -179,10 +179,7 @@ const Register = () => {
         phone_number: phoneSubmit,
       };
       try {
-        const response = await axios.post(
-          `${BASE_URL}/expensense/users/`,
-          userData
-        );
+        const response = await axios.post(`${BASE_URL}/users/`, userData);
         console.log("User registered:", response.data);
         navigation.navigate("SuccessRegister");
       } catch (error) {
