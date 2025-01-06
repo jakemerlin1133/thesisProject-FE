@@ -3,9 +3,88 @@ import RNPickerSelect from "react-native-picker-select";
 import PieChartAnalysis from "../../components/Charts/PieChartAnalysis";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../../constants/Colors";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { BASE_URL } from "../../config";
 
 const Analysis = ({ route }) => {
   const { userId } = route.params;
+
+  const [prediction, setPrediction] = useState(0);
+  const [totalExpenses, setTotalExpenses] = useState(0);
+  const [arrowIcon, setArrowIcon] = useState("");
+  const [arrowColor, setArrowColor] = useState("");
+
+  useEffect(() => {
+    const fetchPrediction = async () => {
+      try {
+        const response = await axios.get(
+          `${BASE_URL}/expense/predict/${userId}`
+        );
+        console.log("Prediction Data:", response.data);
+        setPrediction(parseFloat(response.data.prediction));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchPrediction();
+  }, [userId]);
+
+  useEffect(() => {
+    const fetchExpenses = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/expense/${userId}`);
+        const today = new Date();
+        const currentYear = today.getFullYear();
+
+        const latestMonth = response.data.reduce((latest, expense) => {
+          const expenseDate = new Date(expense.uploaded_at);
+          if (expenseDate.getFullYear() === currentYear) {
+            if (!latest || expenseDate > latest) {
+              return expenseDate;
+            }
+          }
+          return latest;
+        }, null);
+
+        const latestExpenses = response.data.filter((expense) => {
+          const expenseDate = new Date(expense.uploaded_at);
+          return (
+            expenseDate.getFullYear() === currentYear &&
+            expenseDate.getMonth() === latestMonth.getMonth()
+          );
+        });
+
+        const total = latestExpenses.reduce(
+          (acc, expense) => acc + parseFloat(expense.total_value),
+          0
+        );
+        console.log("Total Expenses:", total);
+        setTotalExpenses(total);
+      } catch (err) {
+        console.error("Failed to fetch expenses", err);
+      }
+    };
+    fetchExpenses();
+  }, [userId]);
+
+  useEffect(() => {
+    if (totalExpenses && prediction) {
+      const isPredictionHigher = prediction > totalExpenses;
+      const arrowIcon = isPredictionHigher
+        ? "arrow-up-outline"
+        : "arrow-down-outline";
+      const arrowColor = isPredictionHigher ? "#ff4221" : "#03fc0f";
+
+      console.log("Arrow Icon:", arrowIcon);
+      console.log("Arrow Color:", arrowColor);
+
+      setArrowIcon(arrowIcon);
+      setArrowColor(arrowColor);
+    }
+  }, [totalExpenses, prediction]);
+
   return (
     <>
       <View style={styles.chartContainer}>
@@ -13,14 +92,14 @@ const Analysis = ({ route }) => {
           <Text style={[styles.title, { fontSize: 30 }]}>Prediction</Text>
           <View style={styles.predictionContainer}>
             <Text style={styles.predictionText}>
-              Your estimated expenses for the next month are{" "}
               <Text style={{ fontSize: 19 }}>
-                1550.
+                The expected total expenses for the next month: ₱{prediction}
                 <Ionicons
-                  name="arrow-up-outline"
+                  name={arrowIcon}
                   size={20}
-                  style={styles.icon}
+                  style={[styles.icon, { color: arrowColor }]}
                 />
+                .
               </Text>
             </Text>
           </View>
@@ -92,7 +171,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignItems: "center",
     justifyContent: "center",
-    color: "#f51b22",
     fontWeight: "bold",
   },
   predictionText: {
