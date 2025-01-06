@@ -11,11 +11,33 @@ const Dashboard = ({ route }) => {
   const [totalSum, setTotalSum] = useState(0);
   const [latestDate, setLatestDate] = useState("");
 
+  const [foodSumExpenses, setFoodSumExpenses] = useState(0);
+  const [grocerySumExpenses, setGrocerySumExpenses] = useState(0);
+  const [shoppingSumExpenses, setShoppingSumExpenses] = useState(0);
+  const [billSumExpenses, setBillSumExpenses] = useState(0);
+  const [hardwareSumExpenses, setHardwareSumExpenses] = useState(0);
+  const [medicineSumExpenses, setMedicineSumExpenses] = useState(0);
+  const [othersSumExpenses, setOthersSumExpenses] = useState(0);
+
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/expense/${userId}/`);
         const expenses = response.data;
+
+        if (expenses.length === 0) {
+          const currentDate = new Date();
+          const formattedCurrentDate = `${currentDate.toLocaleString(
+            "default",
+            {
+              month: "long",
+            }
+          )}, ${currentDate.getFullYear()}`;
+          setLatestDate(formattedCurrentDate);
+          setTotalSum(0);
+          setFoodExpenses(0);
+          return;
+        }
 
         const latest = expenses.reduce((latestExpense, currentExpense) => {
           const latestDate = new Date(latestExpense.uploaded_at);
@@ -48,8 +70,42 @@ const Dashboard = ({ route }) => {
         const sum = latestDateExpenses.reduce((acc, expense) => {
           return acc + parseFloat(expense.total_value);
         }, 0);
-
         setTotalSum(sum);
+
+        const foodSum = latestDateExpenses
+          .filter((expense) => expense.matched_store_category === "Food")
+          .reduce((acc, expense) => acc + parseFloat(expense.total_value), 0);
+        setFoodSumExpenses(foodSum.toFixed(2));
+
+        const grocerySum = latestDateExpenses
+          .filter((expense) => expense.matched_store_category === "Grocery")
+          .reduce((acc, expense) => acc + parseFloat(expense.total_value), 0);
+        setGrocerySumExpenses(grocerySum.toFixed(2));
+
+        const shoppingSum = latestDateExpenses
+          .filter((expense) => expense.matched_store_category === "Shopping")
+          .reduce((acc, expense) => acc + parseFloat(expense.total_value), 0);
+        setShoppingSumExpenses(shoppingSum.toFixed(2));
+
+        const billsSum = latestDateExpenses
+          .filter((expense) => expense.matched_store_category === "Bill")
+          .reduce((acc, expense) => acc + parseFloat(expense.total_value), 0);
+        setBillSumExpenses(billsSum.toFixed(2));
+
+        const medicineSum = latestDateExpenses
+          .filter((expense) => expense.matched_store_category === "Medicine")
+          .reduce((acc, expense) => acc + parseFloat(expense.total_value), 0);
+        setMedicineSumExpenses(medicineSum.toFixed(2));
+
+        const hardwareSum = latestDateExpenses
+          .filter((expense) => expense.matched_store_category === "Hardware")
+          .reduce((acc, expense) => acc + parseFloat(expense.total_value), 0);
+        setHardwareSumExpenses(hardwareSum.toFixed(2));
+
+        const othersSum = latestDateExpenses
+          .filter((expense) => expense.matched_store_category === "Others")
+          .reduce((acc, expense) => acc + parseFloat(expense.total_value), 0);
+        setOthersSumExpenses(othersSum.toFixed(2));
       } catch (error) {
         console.error("Error fetching expenses:", error);
       }
@@ -73,7 +129,15 @@ const Dashboard = ({ route }) => {
             </Text>
           </View>
           <View>
-            <ListOfExpensesCategory />
+            <ListOfExpensesCategory
+              fooodExpenses={foodSumExpenses}
+              groceryExpenses={grocerySumExpenses}
+              shoppingExpenses={shoppingSumExpenses}
+              billExpenses={billSumExpenses}
+              medicineExpenses={medicineSumExpenses}
+              hardwareExpenses={hardwareSumExpenses}
+              othersExpenses={othersSumExpenses}
+            />
           </View>
         </View>
       </View>
