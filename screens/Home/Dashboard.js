@@ -35,7 +35,7 @@ const Dashboard = ({ route }) => {
           )}, ${currentDate.getFullYear()}`;
           setLatestDate(formattedCurrentDate);
           setTotalSum(0);
-          setFoodExpenses(0);
+          setFoodSumExpenses(0);
           return;
         }
 
