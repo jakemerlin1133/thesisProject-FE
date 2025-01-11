@@ -8,10 +8,14 @@ const generateRandomColor = () => {
   return `#${randomColor.padStart(6, "0")}`;
 };
 
-const PieChartAnalysis = ({ pieData }) => {
+const PieChartAnalysisWithDatePicker = ({ pieData }) => {
+  if (!pieData || !Array.isArray(pieData)) {
+    return <Text>No data available</Text>; // Or return null to not display anything
+  }
+
   const pieDataWithColors = pieData.map((item) => ({
     ...item,
-    color: generateRandomColor(), // Add random color to each item
+    color: generateRandomColor(),
     legendFontColor: Colors.brown100,
     legendFontSize: 15,
   }));
@@ -42,7 +46,7 @@ const PieChartAnalysis = ({ pieData }) => {
   );
 };
 
-export default PieChartAnalysis;
+export default PieChartAnalysisWithDatePicker;
 
 const styles = StyleSheet.create({
   container: {

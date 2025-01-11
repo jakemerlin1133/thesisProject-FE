@@ -1,6 +1,7 @@
 import { View, StyleSheet, ScrollView, Text } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import PieChartAnalysis from "../../components/Charts/PieChartAnalysis";
+import PieChartAnalysisWithDatePicker from "../../components/Charts/PieChartAnalysisWithDatePicker";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../../constants/Colors";
 import axios from "axios";
@@ -12,8 +13,33 @@ const Analysis = ({ route }) => {
 
   const [prediction, setPrediction] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
+  const [totalSumExpenses, setTotalSumExpenses] = useState(0);
+
+  const [categories, setCategories] = useState([]);
+
+  const [pieChartData, setPieChartData] = useState([]);
+  const [pieChartDataWithPicker, setPieChartDataWithPicker] = useState([]);
+
+  const [years, setYears] = useState([]);
+  const [months, setMonths] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState(null);
+  const [selectedYear, setSelectedYear] = useState(null);
+
   const [arrowIcon, setArrowIcon] = useState("");
   const [arrowColor, setArrowColor] = useState("");
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/categories/`);
+        setCategories(response.data);
+      } catch (err) {
+        console.error("Error fetching categories:", err);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
     const fetchPrediction = async () => {
@@ -21,20 +47,18 @@ const Analysis = ({ route }) => {
         const response = await axios.get(
           `${BASE_URL}/expense/predict/${userId}`
         );
-        console.log("Prediction Data:", response.data);
-        setPrediction(parseFloat(response.data.prediction));
+        setPrediction(parseFloat(response.data.prediction) || 0);
       } catch (err) {
         console.error(err);
       }
     };
-
     fetchPrediction();
   }, [userId]);
 
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/expense/${userId}`);
+        const response = await axios.get(`${BASE_URL}/expense/${userId}/`);
         const today = new Date();
         const currentYear = today.getFullYear();
 
@@ -60,7 +84,6 @@ const Analysis = ({ route }) => {
           (acc, expense) => acc + parseFloat(expense.total_value),
           0
         );
-        console.log("Total Expenses:", total);
         setTotalExpenses(total);
       } catch (err) {
         console.error("Failed to fetch expenses", err);
@@ -76,14 +99,108 @@ const Analysis = ({ route }) => {
         ? "arrow-up-outline"
         : "arrow-down-outline";
       const arrowColor = isPredictionHigher ? "#ff4221" : "#03fc0f";
-
-      console.log("Arrow Icon:", arrowIcon);
-      console.log("Arrow Color:", arrowColor);
-
       setArrowIcon(arrowIcon);
       setArrowColor(arrowColor);
     }
   }, [totalExpenses, prediction]);
+
+  useEffect(() => {
+    if (categories.length === 0) return;
+
+    const fetchSumExpenses = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/expense/${userId}/`);
+        const expenses = response.data;
+
+        if (!expenses.length) {
+          console.log("No expenses found.");
+          return;
+        }
+
+        const latestDate = expenses.reduce((latest, expense) => {
+          const expenseDate = new Date(expense.uploaded_at);
+          return expenseDate > latest ? expenseDate : latest;
+        }, new Date(0));
+
+        const latestYear = latestDate.getFullYear();
+        const latestMonth = latestDate.getMonth();
+
+        const latestMonthExpenses = expenses.filter((expense) => {
+          const expenseDate = new Date(expense.uploaded_at);
+          return (
+            expenseDate.getFullYear() === latestYear &&
+            expenseDate.getMonth() === latestMonth
+          );
+        });
+
+        const totalSum = latestMonthExpenses.reduce(
+          (sum, expense) => sum + parseFloat(expense.total_value),
+          0
+        );
+
+        setTotalSumExpenses(totalSum);
+
+        const categorizedData = latestMonthExpenses.reduce((acc, expense) => {
+          const category = expense.matched_store_category || "Uncategorized";
+          if (acc[category]) {
+            acc[category] += parseFloat(expense.total_value);
+          } else {
+            acc[category] = parseFloat(expense.total_value);
+          }
+          return acc;
+        }, {});
+
+        const pieChartFormattedData = Object.keys(categorizedData).map(
+          (category) => ({
+            name: category,
+            expenses: categorizedData[category],
+          })
+        );
+
+        setPieChartData(pieChartFormattedData);
+      } catch (error) {
+        console.error("Error fetching expenses for the latest month:", error);
+      }
+    };
+    fetchSumExpenses();
+  }, [userId, categories]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/expense/${userId}/`);
+        const data = response.data;
+
+        const uniqueYears = [
+          ...new Set(
+            data.map((item) => new Date(item.uploaded_at).getFullYear())
+          ),
+        ];
+
+        const sortedYears = uniqueYears.sort((a, b) => b - a);
+        setYears(sortedYears);
+
+        const latestDate = data.reduce((latest, item) => {
+          const itemDate = new Date(item.uploaded_at);
+          return itemDate > latest ? itemDate : latest;
+        }, new Date(0));
+
+        const latestYear = latestDate.getFullYear();
+        const latestMonth = latestDate.getMonth();
+
+        setSelectedYear(latestYear.toString());
+        setSelectedMonth((latestMonth + 1).toString());
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [userId]);
+
+  const handleYearChange = (value) => {
+    setSelectedYear(value);
+  };
 
   return (
     <>
@@ -93,7 +210,8 @@ const Analysis = ({ route }) => {
           <View style={styles.predictionContainer}>
             <Text style={styles.predictionText}>
               <Text style={{ fontSize: 19 }}>
-                The expected total expenses for the next month: ₱{prediction}
+                The expected total expenses for the next month: ₱
+                {prediction.toFixed(2)}
                 <Ionicons
                   name={arrowIcon}
                   size={20}
@@ -107,43 +225,54 @@ const Analysis = ({ route }) => {
           <Text style={styles.title}>
             "Comparison of Expense Categories: This Month and Chosen Month"
           </Text>
-          <Text style={styles.subTitle}>This Month:</Text>
-          <PieChartAnalysis />
+          <Text style={styles.subTitle}>Current Month:</Text>
+          <PieChartAnalysis pieData={pieChartData} />
           <Text style={styles.totalExpenses}>
-            Total Expenses for this month: 24000
+            Total Expenses for this month: ₱{totalSumExpenses.toFixed(2)}
           </Text>
           <View style={styles.row}>
             <Text style={styles.subTitle}>From:</Text>
             <RNPickerSelect
-              onValueChange={(value) => console.log(value)}
+              onValueChange={(value) => setSelectedMonth(value)}
               items={[
-                { label: "January", value: "January" },
-                { label: "February", value: "February" },
-                { label: "March", value: "March" },
-                { label: "April", value: "April" },
-                { label: "May", value: "May" },
-                { label: "June", value: "June" },
-                { label: "July", value: "July" },
-                { label: "August", value: "August" },
-                { label: "September", value: "September" },
-                { label: "October", value: "October" },
-                { label: "November", value: "November" },
-                { label: "December", value: "December" },
+                { label: "January", value: "1" },
+                { label: "February", value: "2" },
+                { label: "March", value: "3" },
+                { label: "April", value: "4" },
+                { label: "May", value: "5" },
+                { label: "June", value: "6" },
+                { label: "July", value: "7" },
+                { label: "August", value: "8" },
+                { label: "September", value: "9" },
+                { label: "October", value: "10" },
+                { label: "November", value: "11" },
+                { label: "December", value: "12" },
               ]}
-              placeholder={{ label: "Month", value: null }}
+              value={selectedMonth}
+              placeholder={{}}
               style={pickerStyles}
             />
+
             <RNPickerSelect
-              onValueChange={(value) => console.log(value)}
-              items={[
-                { label: "2024", value: "2024" },
-                { label: "2023", value: "2023" },
-              ]}
-              placeholder={{ label: "2024", value: null }}
+              onValueChange={handleYearChange}
+              items={years
+                .sort((a, b) => b - a)
+                .filter((year, index) => index !== 0)
+                .map((year) => ({
+                  label: year.toString(),
+                  value: year.toString(),
+                }))}
+              placeholder={{
+                label: years.length > 0 ? `${years[0]}` : "Select Year",
+                value: years.length > 0 ? years[0].toString() : null,
+              }}
+              value={
+                selectedYear || (years.length > 0 ? years[0].toString() : null)
+              }
               style={pickerStyles}
             />
           </View>
-          <PieChartAnalysis />
+          <PieChartAnalysisWithDatePicker />
           <Text style={styles.totalExpenses}>
             Total Expenses for this month: 24000
           </Text>
@@ -202,8 +331,9 @@ const styles = StyleSheet.create({
   totalExpenses: {
     color: Colors.brown600,
     fontWeight: "bold",
-    fontSize: 17,
-    marginRight: 10,
+    fontSize: 15,
+    marginLeft: 15,
+    marginTop: 5,
     marginBottom: 25,
   },
 });

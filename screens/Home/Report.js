@@ -11,7 +11,6 @@ import RNPickerSelect from "react-native-picker-select";
 import { Colors } from "../../constants/Colors";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import * as Print from "expo-print";
-import { shareAsync } from "expo-sharing";
 
 import axios from "axios";
 import { BASE_URL } from "../../config";
