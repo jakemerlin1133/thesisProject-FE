@@ -14,6 +14,14 @@ const Profile = ({ route, navigation }) => {
   const [lastName, setLastName] = useState(null);
   const [role, setRole] = useState(null);
 
+  const capitalizeEachWord = (str) => {
+    if (!str) return "";
+    return str
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
+
   const logoutHandler = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/logout/`);
@@ -32,10 +40,10 @@ const Profile = ({ route, navigation }) => {
       try {
         const response = await axios.get(`${BASE_URL}/users/${userId}`);
         const user = response.data;
-        setFirstName(user.first_name);
-        setMiddleName(user.middle_name);
-        setLastName(user.last_name);
-        setRole(user.position);
+        setFirstName(capitalizeEachWord(user.first_name));
+        setMiddleName(capitalizeEachWord(user.middle_name));
+        setLastName(capitalizeEachWord(user.last_name));
+        setRole(capitalizeEachWord(user.position));
       } catch (error) {
         console.error("Fetching Data:", error);
       }
