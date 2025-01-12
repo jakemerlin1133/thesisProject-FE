@@ -1,7 +1,6 @@
 import { View, StyleSheet, ScrollView, Text } from "react-native";
 import RNPickerSelect from "react-native-picker-select";
 import PieChartAnalysis from "../../components/Charts/PieChartAnalysis";
-import PieChartAnalysisWithDatePicker from "../../components/Charts/PieChartAnalysisWithDatePicker";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../../constants/Colors";
 import axios from "axios";
@@ -13,15 +12,20 @@ const Analysis = ({ route }) => {
 
   const [prediction, setPrediction] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
+
   const [totalSumExpenses, setTotalSumExpenses] = useState(0);
+  const [totalSumFilteredExpenses, setTotalSumFilteredExpenses] = useState(0);
 
   const [categories, setCategories] = useState([]);
 
   const [pieChartData, setPieChartData] = useState([]);
-  const [pieChartDataWithPicker, setPieChartDataWithPicker] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+
+  const [currentMonthDisplay, setCurrentMonthDisplay] = useState(null);
+  const [currentYearDisplay, setCurrentYearDisplay] = useState(null);
 
   const [years, setYears] = useState([]);
-  const [months, setMonths] = useState([]);
+
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [selectedYear, setSelectedYear] = useState(null);
 
@@ -117,6 +121,21 @@ const Analysis = ({ route }) => {
           return;
         }
 
+        const monthNames = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+
         const latestDate = expenses.reduce((latest, expense) => {
           const expenseDate = new Date(expense.uploaded_at);
           return expenseDate > latest ? expenseDate : latest;
@@ -124,6 +143,8 @@ const Analysis = ({ route }) => {
 
         const latestYear = latestDate.getFullYear();
         const latestMonth = latestDate.getMonth();
+        setCurrentMonthDisplay(monthNames[latestMonth]);
+        setCurrentYearDisplay(latestYear);
 
         const latestMonthExpenses = expenses.filter((expense) => {
           const expenseDate = new Date(expense.uploaded_at);
@@ -198,9 +219,70 @@ const Analysis = ({ route }) => {
     fetchData();
   }, [userId]);
 
-  const handleYearChange = (value) => {
-    setSelectedYear(value);
-  };
+  useEffect(() => {
+    if (!selectedMonth || !selectedYear) return;
+
+    const fetchFilteredData = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/expense/${userId}/`);
+        const data = response.data;
+
+        if (!data.length) {
+          console.log("No expenses found for the selected month and year.");
+          setFilteredData([{ name: "No Data", expenses: 0 }]);
+          setTotalSumFilteredExpenses(0);
+          return;
+        }
+
+        const filteredExpenses = data.filter((expense) => {
+          const expenseDate = new Date(expense.uploaded_at);
+          return (
+            expenseDate.getFullYear().toString() === selectedYear &&
+            (expenseDate.getMonth() + 1).toString() === selectedMonth
+          );
+        });
+
+        if (!filteredExpenses.length) {
+          console.log("No expenses found for the selected date.");
+          setFilteredData([{ name: "No Data", expenses: 0 }]);
+          setTotalSumFilteredExpenses(0);
+          return;
+        }
+
+        const totalSum = filteredExpenses.reduce(
+          (sum, expense) => sum + parseFloat(expense.total_value),
+          0
+        );
+
+        setTotalSumFilteredExpenses(totalSum);
+
+        const categorizedData = filteredExpenses.reduce((acc, expense) => {
+          const category = expense.matched_store_category || "Uncategorized";
+          if (acc[category]) {
+            acc[category] += parseFloat(expense.total_value);
+          } else {
+            acc[category] = parseFloat(expense.total_value);
+          }
+          return acc;
+        }, {});
+
+        const pieChartFormattedData = Object.keys(categorizedData).map(
+          (category) => ({
+            name: category,
+            expenses: categorizedData[category],
+          })
+        );
+
+        setFilteredData(pieChartFormattedData);
+        console.log(pieChartFormattedData);
+      } catch (error) {
+        console.error("Error filtering data:", error);
+        setFilteredData([{ name: "No Data", expenses: 0 }]);
+        setTotalSumFilteredExpenses(0);
+      }
+    };
+    fetchFilteredData();
+  }, [selectedMonth, selectedYear, userId]);
 
   return (
     <>
@@ -225,7 +307,9 @@ const Analysis = ({ route }) => {
           <Text style={styles.title}>
             "Comparison of Expense Categories: This Month and Chosen Month"
           </Text>
-          <Text style={styles.subTitle}>Current Month:</Text>
+          <Text style={styles.subTitle}>
+            Current Month: {currentMonthDisplay}, {currentYearDisplay}
+          </Text>
           <PieChartAnalysis pieData={pieChartData} />
           <Text style={styles.totalExpenses}>
             Total Expenses for this month: ₱{totalSumExpenses.toFixed(2)}
@@ -254,7 +338,7 @@ const Analysis = ({ route }) => {
             />
 
             <RNPickerSelect
-              onValueChange={handleYearChange}
+              onValueChange={(value) => setSelectedYear(value)}
               items={years
                 .sort((a, b) => b - a)
                 .filter((year, index) => index !== 0)
@@ -272,9 +356,10 @@ const Analysis = ({ route }) => {
               style={pickerStyles}
             />
           </View>
-          <PieChartAnalysisWithDatePicker />
+          <PieChartAnalysis pieData={filteredData} />
           <Text style={styles.totalExpenses}>
-            Total Expenses for this month: 24000
+            Total Expenses for this month: ₱
+            {totalSumFilteredExpenses.toFixed(2)}
           </Text>
         </ScrollView>
       </View>
