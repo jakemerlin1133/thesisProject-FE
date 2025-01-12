@@ -49,10 +49,9 @@ const Register = () => {
   const [errorMessage, setErrorMessage] = useState({});
 
   const roles = [
-    { label: "Student", value: "student" },
-    { label: "Instructor", value: "instructor" },
-    { label: "Admin", value: "admin" },
-    { label: "Others", value: "others" },
+    { label: "Student", value: "Student" },
+    { label: "Instructor", value: "Instructor" },
+    { label: "Others", value: "Others" },
   ];
 
   const onChange = (event, selectedDate) => {

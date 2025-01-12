@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -7,6 +7,13 @@ import { Colors } from "../../constants/Colors";
 import { BASE_URL } from "../../config";
 
 const Profile = ({ route, navigation }) => {
+  const { userId } = route.params;
+
+  const [firstName, setFirstName] = useState(null);
+  const [middleName, setMiddleName] = useState(null);
+  const [lastName, setLastName] = useState(null);
+  const [role, setRole] = useState(null);
+
   const logoutHandler = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/logout/`);
@@ -20,6 +27,22 @@ const Profile = ({ route, navigation }) => {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/users/${userId}`);
+        const user = response.data;
+        setFirstName(user.first_name);
+        setMiddleName(user.middle_name);
+        setLastName(user.last_name);
+        setRole(user.position);
+      } catch (error) {
+        console.error("Fetching Data:", error);
+      }
+    };
+    fetchData();
+  }, [userId]);
+
   return (
     <>
       <View style={styles.profileContainer}>
@@ -30,8 +53,10 @@ const Profile = ({ route, navigation }) => {
           />
         </View>
         <View style={styles.nameContainer}>
-          <Text style={styles.text}>Jake Russel L. Merlin</Text>
-          <Text style={styles.position}>Student</Text>
+          <Text style={styles.text}>
+            {firstName} {middleName} {lastName}
+          </Text>
+          <Text style={styles.position}>{role}</Text>
         </View>
       </View>
 
