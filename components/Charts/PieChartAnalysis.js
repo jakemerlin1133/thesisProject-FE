@@ -11,7 +11,7 @@ const generateRandomColor = () => {
 const PieChartAnalysis = ({ pieData }) => {
   const pieDataWithColors = pieData.map((item) => ({
     ...item,
-    color: generateRandomColor(), // Add random color to each item
+    color: generateRandomColor(),
     legendFontColor: Colors.brown100,
     legendFontSize: 15,
   }));
