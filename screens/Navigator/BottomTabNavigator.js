@@ -11,7 +11,7 @@ import Analysis from "../Home/Analysis";
 
 const Tab = createBottomTabNavigator();
 
-export default function BottomTabNavigator({ route }) {
+export default function BottomTabNavigator({ route, navigation }) {
   const { userId } = route.params;
   const [menuVisible, setMenuVisible] = useState(false);
 
@@ -63,24 +63,21 @@ export default function BottomTabNavigator({ route }) {
                 <Menu.Item
                   onPress={() => {
                     closeMenu();
-                    // Action for "Scan receipt"
-                    console.log("Scan receipt");
+                    navigation.navigate("Scan");
                   }}
                   title="Scan Receipt"
                 />
                 <Menu.Item
                   onPress={() => {
                     closeMenu();
-                    // Action for "Upload receipt"
-                    console.log("Upload receipt");
+                    navigation.navigate("Upload");
                   }}
                   title="Upload Receipt"
                 />
                 <Menu.Item
                   onPress={() => {
                     closeMenu();
-                    // Action for "Input expenses"
-                    console.log("Input expenses");
+                    navigation.navigate("Input");
                   }}
                   title="Input Expenses"
                 />

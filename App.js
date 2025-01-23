@@ -12,6 +12,10 @@ import BottomTabNavigator from "./screens/Navigator/BottomTabNavigator";
 import TermsAndConditions from "./screens/TermsAndConditions";
 import PrivacyPolicy from "./screens/PrivacyPolicy";
 
+import Input from "./screens/InputData/Input";
+import Upload from "./screens/InputData/Upload";
+import Scan from "./screens/InputData/Scan";
+
 import { Color, Colors } from "./constants/Colors";
 
 const Stack = createStackNavigator();
@@ -115,6 +119,39 @@ export default function App() {
             component={BottomTabNavigator}
             initialParams={{ userId }}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Input"
+            component={Input}
+            options={{
+              headerStyle: {
+                backgroundColor: Colors.brown500,
+              },
+              headerTintColor: Colors.brown100,
+              title: "Input Expenses",
+            }}
+          />
+          <Stack.Screen
+            name="Upload"
+            component={Upload}
+            options={{
+              headerStyle: {
+                backgroundColor: Colors.brown500,
+              },
+              headerTintColor: Colors.brown100,
+              title: "Upload Receipt",
+            }}
+          />
+          <Stack.Screen
+            name="Scan"
+            component={Scan}
+            options={{
+              headerStyle: {
+                backgroundColor: Colors.brown500,
+              },
+              headerTintColor: Colors.brown100,
+              title: "Scan Receipt",
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
