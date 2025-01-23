@@ -94,8 +94,6 @@ const Login = ({ navigation }) => {
 
 export default Login;
 
-// const deviceWidth = Dimensions.get("window").width;
-
 const styles = StyleSheet.create({
   Container: {
     position: "static",

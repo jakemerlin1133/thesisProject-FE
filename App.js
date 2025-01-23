@@ -123,6 +123,7 @@ export default function App() {
           <Stack.Screen
             name="Input"
             component={Input}
+            initialParams={{ userId }}
             options={{
               headerStyle: {
                 backgroundColor: Colors.brown500,
@@ -134,6 +135,7 @@ export default function App() {
           <Stack.Screen
             name="Upload"
             component={Upload}
+            initialParams={{ userId }}
             options={{
               headerStyle: {
                 backgroundColor: Colors.brown500,
@@ -145,6 +147,7 @@ export default function App() {
           <Stack.Screen
             name="Scan"
             component={Scan}
+            initialParams={{ userId }}
             options={{
               headerStyle: {
                 backgroundColor: Colors.brown500,

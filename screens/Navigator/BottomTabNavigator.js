@@ -63,21 +63,21 @@ export default function BottomTabNavigator({ route, navigation }) {
                 <Menu.Item
                   onPress={() => {
                     closeMenu();
-                    navigation.navigate("Scan");
+                    navigation.navigate("Scan", { userId });
                   }}
                   title="Scan Receipt"
                 />
                 <Menu.Item
                   onPress={() => {
                     closeMenu();
-                    navigation.navigate("Upload");
+                    navigation.navigate("Upload", { userId });
                   }}
                   title="Upload Receipt"
                 />
                 <Menu.Item
                   onPress={() => {
                     closeMenu();
-                    navigation.navigate("Input");
+                    navigation.navigate("Input", { userId });
                   }}
                   title="Input Expenses"
                 />
