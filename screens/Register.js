@@ -44,7 +44,6 @@ const Register = () => {
   const [usernameSubmit, setUsernameSubmit] = useState("");
   const [passwordSubmit, setPasswordSubmit] = useState("");
   const [confirmPasswordSubmit, setConfirmPasswordSubmit] = useState("");
-  const [isCheckedSubmit, setIsCheckedSubmit] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState({});
 

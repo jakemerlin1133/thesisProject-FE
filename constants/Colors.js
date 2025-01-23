@@ -6,6 +6,5 @@ export const Colors = {
   brown400: "#f2cbaa",
   brown500: "#9c7d64",
   brown600: "#c78f5d",
-  // brown700: ""
   red: "#ff0313",
 };

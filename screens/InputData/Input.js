@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Alert } from "react-native";
 import {
   Text,
   View,
@@ -10,15 +11,18 @@ import RNPickerSelect from "react-native-picker-select";
 import axios from "axios";
 import { BASE_URL } from "../../config";
 import { Colors } from "../../constants/Colors";
+import { useNavigation } from "@react-navigation/native";
 
 const Input = ({ route }) => {
   const { userId } = route.params;
+
+  const navigation = useNavigation();
 
   const [storeOptions, setStoreOptions] = useState([]);
   const [amount, setAmount] = useState("");
   const [selectedStore, setSelectedStore] = useState(null);
   const [selectOtherStore, setSelectOtherStore] = useState(null);
-  const [errorMEssage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState({});
 
   const handleChange = (input) => {
     if (/^\d*\.?\d*$/.test(input)) {
@@ -50,32 +54,66 @@ const Input = ({ route }) => {
   }, [userId]);
 
   const submitHandler = async () => {
-    const expenseData = {
-      user_id: userId,
-      file: null,
-      matched_store:
-        selectedStore === "Others" ? selectOtherStore : selectedStore,
-      total_value:
-        amount !== undefined && amount !== null ? parseFloat(amount) : 0.0,
-    };
+    const errors = {};
 
-    console.log(expenseData);
+    if (selectedStore === "Others" && !selectOtherStore?.trim()) {
+      errors.otherStore = "Other store is empty";
+    }
 
-    try {
-      const response = await axios.post(
-        `${BASE_URL}/expense/${userId}/`,
-        expenseData
-      );
-      console.log("Expense submitted successfully:", response.data);
-    } catch (error) {
-      setErrorMessage("Invalid Credentials.");
+    if (!selectedStore) {
+      errors.store = "Store is empty";
+    }
+
+    if (!amount.trim()) {
+      errors.amount = "Amount is empty";
+    }
+
+    setErrorMessage(errors);
+    if (Object.keys(errors).length === 0) {
+      const expenseData = {
+        user_id: userId,
+        file: null,
+        matched_store:
+          selectedStore === "Others" ? selectOtherStore : selectedStore,
+        total_value:
+          amount !== undefined && amount !== null ? parseFloat(amount) : 0.0,
+      };
+
+      try {
+        const response = await axios.post(
+          `${BASE_URL}/expense/${userId}/`,
+          expenseData
+        );
+        console.log("Expense submitted successfully:", response.data);
+
+        Alert.alert("Success", "Expense submitted successfully", [
+          {
+            text: "OK",
+            onPress: () => {
+              navigation.goBack();
+            },
+          },
+        ]);
+      } catch (error) {
+        setErrorMessage("Invalid Credentials.");
+      }
     }
   };
 
   return (
     <>
       <View style={{ padding: 20 }}>
-        <Text style={styles.errorMessage}>{errorMEssage}</Text>
+        {errorMessage.otherStore && (
+          <Text style={styles.errorMessage}>{errorMessage.otherStore}</Text>
+        )}
+
+        {errorMessage.store && (
+          <Text style={styles.errorMessage}>{errorMessage.store}</Text>
+        )}
+
+        {errorMessage.amount && (
+          <Text style={styles.errorMessage}>{errorMessage.amount}</Text>
+        )}
 
         <RNPickerSelect
           onValueChange={(value) => setSelectedStore(value)}
@@ -138,6 +176,8 @@ const styles = StyleSheet.create({
   errorMessage: {
     color: Colors.red,
     textAlign: "center",
+    fontSize: 15,
+    fontWeight: "500",
   },
 });
 
