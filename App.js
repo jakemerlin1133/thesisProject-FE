@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View, ActivityIndicator } from "react-native";
+import { Ionicons } from "react-native-vector-icons";
 
 import Login from "./screens/Login";
 import Register from "./screens/Register";
@@ -162,14 +163,25 @@ export default function App() {
             name="Verification"
             component={Verification}
             initialParams={{ userId }}
-            options={{
+            options={({ navigation }) => ({
               animation: "none",
               headerStyle: {
                 backgroundColor: Colors.brown500,
               },
               headerTintColor: Colors.brown100,
               title: "Verification",
-            }}
+              headerLeft: () => (
+                <Ionicons
+                  name="arrow-back"
+                  size={24}
+                  color={Colors.brown100}
+                  style={{ marginHorizontal: 15 }}
+                  onPress={() =>
+                    navigation.replace("DashboardTabs", { userId })
+                  }
+                />
+              ),
+            })}
           />
         </Stack.Navigator>
       </NavigationContainer>
