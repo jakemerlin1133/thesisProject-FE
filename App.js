@@ -18,7 +18,7 @@ import Upload from "./screens/InputData/Upload";
 import Scan from "./screens/InputData/Scan";
 import Verification from "./screens/InputData/Verification";
 
-import { Color, Colors } from "./constants/Colors";
+import { Colors } from "./constants/Colors";
 
 const Stack = createStackNavigator();
 
