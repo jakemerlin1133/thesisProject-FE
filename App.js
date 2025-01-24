@@ -15,6 +15,7 @@ import PrivacyPolicy from "./screens/PrivacyPolicy";
 import Input from "./screens/InputData/Input";
 import Upload from "./screens/InputData/Upload";
 import Scan from "./screens/InputData/Scan";
+import Verification from "./screens/InputData/verification";
 
 import { Color, Colors } from "./constants/Colors";
 
@@ -120,6 +121,7 @@ export default function App() {
             initialParams={{ userId }}
             options={{ headerShown: false }}
           />
+
           <Stack.Screen
             name="Input"
             component={Input}
@@ -154,6 +156,19 @@ export default function App() {
               },
               headerTintColor: Colors.brown100,
               title: "Scan Receipt",
+            }}
+          />
+          <Stack.Screen
+            name="Verification"
+            component={Verification}
+            initialParams={{ userId }}
+            options={{
+              animation: "none",
+              headerStyle: {
+                backgroundColor: Colors.brown500,
+              },
+              headerTintColor: Colors.brown100,
+              title: "Verification",
             }}
           />
         </Stack.Navigator>
