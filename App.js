@@ -163,25 +163,13 @@ export default function App() {
             name="Verification"
             component={Verification}
             initialParams={{ userId }}
-            options={({ navigation }) => ({
-              animation: "none",
+            options={{
+              headerLeft: () => null,
               headerStyle: {
                 backgroundColor: Colors.brown500,
               },
               headerTintColor: Colors.brown100,
-              title: "Verification",
-              headerLeft: () => (
-                <Ionicons
-                  name="arrow-back"
-                  size={24}
-                  color={Colors.brown100}
-                  style={{ marginHorizontal: 15 }}
-                  onPress={() =>
-                    navigation.replace("DashboardTabs", { userId })
-                  }
-                />
-              ),
-            })}
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>

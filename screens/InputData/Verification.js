@@ -13,11 +13,16 @@ import { Ionicons } from "react-native-vector-icons";
 import axios from "axios";
 import { Colors } from "../../constants/Colors";
 import { BASE_URL } from "../../config";
+import { useNavigation } from "@react-navigation/native";
 
 const Verification = ({ route }) => {
   const { userId } = route.params;
+
+  const navigation = useNavigation();
+
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [editableFields, setEditableFields] = useState(new Set());
 
   useEffect(() => {
     const fetchExpenseData = async () => {
@@ -25,7 +30,6 @@ const Verification = ({ route }) => {
         const response = await axios.get(`${BASE_URL}/expense/${userId}/`);
 
         const latestExpense = response.data.sort((a, b) => b.id - a.id)[0];
-        console.log("Latest Expense:", latestExpense);
 
         if (latestExpense) {
           if (
@@ -37,18 +41,11 @@ const Verification = ({ route }) => {
             if (!isNaN(totalValue)) {
               latestExpense.total_value = totalValue.toFixed(2);
             } else {
-              console.log("Invalid total_value:", latestExpense.total_value);
               latestExpense.total_value = "Invalid value";
             }
           } else {
-            console.log(
-              "total_value is missing or not a string:",
-              latestExpense.total_value
-            );
             latestExpense.total_value = "Invalid value";
           }
-        } else {
-          console.log("No expense data found.");
         }
 
         setData(latestExpense);
@@ -73,7 +70,49 @@ const Verification = ({ route }) => {
 
   const { file, matched_store, matched_store_category, total_value } = data;
   const imageUri = `${BASE_URL}${file}`;
-  console.log(imageUri);
+
+  const editHandler = (field) => {
+    setEditableFields((prevFields) => {
+      const updatedFields = new Set(prevFields);
+      if (updatedFields.has(field)) {
+        updatedFields.delete(field);
+      } else {
+        updatedFields.add(field);
+      }
+      return updatedFields;
+    });
+  };
+
+  const submitHandler = async () => {
+    try {
+      if (!data || !data.id) {
+        Alert.alert("Error", "Expense ID not found.");
+        return;
+      }
+
+      const expenseId = data.id;
+      const endpoint = `${BASE_URL}/expense/${userId}/${expenseId}/`;
+
+      const updatedData = {
+        matched_store: data.matched_store,
+        matched_store_category: data.matched_store_category,
+        total_value: data.total_value,
+      };
+
+      const response = await axios.put(endpoint, updatedData, {
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (response.status === 200) {
+        navigation.navigate("DashboardTabs", { refresh: true, userId });
+      } else {
+        Alert.alert("Error", "Failed to update expense.");
+      }
+    } catch (error) {
+      console.error("Error updating expense:", error);
+      Alert.alert("Error", "An error occurred while updating the expense.");
+    }
+  };
 
   return (
     <>
@@ -90,12 +129,30 @@ const Verification = ({ route }) => {
           </View>
 
           <View>
-            <View style={styles.textAmount}>
+            <View
+              style={[
+                styles.textAmount,
+                {
+                  backgroundColor: editableFields.has("store")
+                    ? Colors.brown100
+                    : Colors.brown300,
+                },
+              ]}
+            >
               <TextInput
                 style={[styles.inputDisplay, { flex: 1 }]}
                 placeholderTextColor={Colors.brown600}
                 value={matched_store ? matched_store[0] : "Others"}
-                editable={false}
+                editable={editableFields.has("store")}
+                onChangeText={(text) =>
+                  setData((prevData) => ({
+                    ...prevData,
+                    matched_store: [
+                      text,
+                      ...(prevData.matched_store?.slice(1) || []),
+                    ],
+                  }))
+                }
               />
 
               <TouchableOpacity style={styles.iconContainer}>
@@ -104,35 +161,57 @@ const Verification = ({ route }) => {
                   size={24}
                   color={Colors.brown500}
                   style={styles.editIcon}
+                  onPress={() => editHandler("store")}
                 />
               </TouchableOpacity>
             </View>
 
-            <View style={styles.textAmount}>
+            <View
+              style={[
+                styles.textAmount,
+                {
+                  backgroundColor: Colors.brown300,
+                },
+              ]}
+            >
               <TextInput
                 style={[styles.inputDisplay, { flex: 1 }]}
                 placeholderTextColor={Colors.brown600}
-                value={matched_store_category || "Others"}
+                value={matched_store_category}
                 editable={false}
               />
-
-              <TouchableOpacity style={styles.iconContainer}>
-                <Ionicons
-                  name="create-outline"
-                  size={24}
-                  color={Colors.brown500}
-                  style={styles.editIcon}
-                />
-              </TouchableOpacity>
             </View>
 
-            <View style={styles.textAmount}>
+            <View
+              style={[
+                styles.textAmount,
+                {
+                  backgroundColor: editableFields.has("total")
+                    ? Colors.brown100
+                    : Colors.brown300,
+                },
+              ]}
+            >
               <TextInput
                 keyboardType="numeric"
                 style={[styles.inputDisplay, { flex: 1 }]}
                 placeholderTextColor={Colors.brown600}
-                value={total_value ? total_value : "0.00"}
-                editable={false}
+                value={total_value}
+                editable={editableFields.has("total")}
+                onChangeText={(text) => {
+                  const sanitizedText = text.replace(/[^0-9.]/g, "");
+
+                  const parts = sanitizedText.split(".");
+                  if (parts.length > 2) return;
+                  if (parts[1] && parts[1].length > 2) {
+                    return;
+                  }
+
+                  setData((prevData) => ({
+                    ...prevData,
+                    total_value: sanitizedText,
+                  }));
+                }}
               />
 
               <TouchableOpacity style={styles.iconContainer}>
@@ -141,12 +220,16 @@ const Verification = ({ route }) => {
                   size={24}
                   color={Colors.brown500}
                   style={styles.editIcon}
+                  onPress={() => editHandler("total")}
                 />
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.buttonStyle}>
-              <Text style={styles.buttonText}>Save</Text>
+            <TouchableOpacity
+              style={styles.buttonStyle}
+              onPress={submitHandler}
+            >
+              <Text style={styles.buttonText}>Done</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -194,7 +277,6 @@ const styles = StyleSheet.create({
     transform: [{ translateY: -12 }],
   },
   textAmount: {
-    backgroundColor: Colors.brown200,
     color: Colors.brown50,
     marginHorizontal: 4,
     paddingHorizontal: 20,
@@ -212,6 +294,7 @@ const styles = StyleSheet.create({
   inputDisplay: {
     color: Colors.brown500,
   },
+
   buttonStyle: {
     backgroundColor: Colors.brown600,
     paddingVertical: 10,
