@@ -90,7 +90,7 @@ const Input = ({ route }) => {
           {
             text: "OK",
             onPress: () => {
-              navigation.navigate("DashboardTabs", { refresh: true });
+              navigation.navigate("DashboardTabs", { refresh: true, userId });
             },
           },
         ]);
