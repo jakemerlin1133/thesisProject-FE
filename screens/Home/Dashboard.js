@@ -111,7 +111,7 @@ const Dashboard = ({ route }) => {
       }
     };
     fetchExpenses();
-  }, [userId]);
+  }, [userId, route.params?.refresh]);
 
   return (
     <>
