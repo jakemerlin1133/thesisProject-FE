@@ -114,6 +114,29 @@ const Verification = ({ route }) => {
     }
   };
 
+  const deletetHandler = async () => {
+    if (!data || !data.id) {
+      Alert.alert("Error", "Expense ID not found.");
+      return;
+    }
+
+    const expenseId = data.id;
+    const endpoint = `${BASE_URL}/expense/${userId}/${expenseId}/`;
+
+    const response = await axios.delete(endpoint, {
+      headers: { "Content-Type": "application/json" },
+    });
+
+    Alert.alert("Success", "Image Deleted successfully!", [
+      {
+        text: "OK",
+        onPress: () => {
+          navigation.navigate("DashboardTabs", { userId });
+        },
+      },
+    ]);
+  };
+
   return (
     <>
       <ScrollView>
@@ -225,12 +248,21 @@ const Verification = ({ route }) => {
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity
-              style={styles.buttonStyle}
-              onPress={submitHandler}
-            >
-              <Text style={styles.buttonText}>Done</Text>
-            </TouchableOpacity>
+            <View>
+              <TouchableOpacity
+                style={styles.buttonStyle}
+                onPress={submitHandler}
+              >
+                <Text style={styles.buttonText}>Done</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.deleteButtonStyle}
+                onPress={deletetHandler}
+              >
+                <Text style={styles.deleteButtonText}>Delete</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -306,6 +338,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonText: {
+    color: Colors.brown50,
+    fontSize: 16,
+    fontWeight: "500",
+  },
+
+  deleteButtonStyle: {
+    backgroundColor: "#db162d",
+    paddingVertical: 10,
+    marginHorizontal: 4,
+    paddingHorizontal: 32,
+    marginVertical: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  deleteButtonText: {
     color: Colors.brown50,
     fontSize: 16,
     fontWeight: "500",
