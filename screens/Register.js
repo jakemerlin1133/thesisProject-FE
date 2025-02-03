@@ -40,18 +40,11 @@ const Register = () => {
   const [emailSubmit, setEmailSubmit] = useState("");
   const [phoneSubmit, setPhoneSubmit] = useState("");
   const [dobSubmit, setDobSubmit] = useState(null);
-  const [selectedRoleSubmit, setSelectedRoleSubmit] = useState(null);
   const [usernameSubmit, setUsernameSubmit] = useState("");
   const [passwordSubmit, setPasswordSubmit] = useState("");
   const [confirmPasswordSubmit, setConfirmPasswordSubmit] = useState("");
 
   const [errorMessage, setErrorMessage] = useState({});
-
-  const roles = [
-    { label: "Student", value: "Student" },
-    { label: "Instructor", value: "Instructor" },
-    { label: "Others", value: "Others" },
-  ];
 
   const onChange = (event, selectedDate) => {
     setShow(Platform.OS === "ios");
@@ -131,9 +124,6 @@ const Register = () => {
     if (!dobSubmit) {
       errors.dob = "Date of Birth is empty.";
     }
-    if (!selectedRoleSubmit) {
-      errors.role = "Role is empty.";
-    }
     if (!usernameSubmit) {
       errors.username = "Username is empty.";
     }
@@ -172,7 +162,6 @@ const Register = () => {
         last_name: lastnameSubmit,
         birthdate: dobSubmit,
         age: age,
-        position: selectedRoleSubmit,
         email: emailSubmit,
         phone_number: phoneSubmit,
       };
@@ -298,34 +287,6 @@ const Register = () => {
 
             {errorMessage.dob && (
               <Text style={styles.errorMessage}>{errorMessage.dob}</Text>
-            )}
-
-            <RNPickerSelect
-              onValueChange={(value) => setSelectedRoleSubmit(value)}
-              items={roles}
-              style={{
-                inputIOS: {
-                  ...styles.input,
-                  color: Colors.brown500,
-                },
-                inputAndroid: {
-                  ...styles.input,
-                  color: Colors.brown500,
-                },
-                placeholder: {
-                  color: Colors.brown600,
-                },
-              }}
-              placeholder={{
-                label: "Select Role",
-                value: null,
-              }}
-              value={selectedRoleSubmit}
-              onChangeText={setSelectedRoleSubmit}
-            />
-
-            {errorMessage.role && (
-              <Text style={styles.errorMessage}>{errorMessage.role}</Text>
             )}
 
             <TextInput
