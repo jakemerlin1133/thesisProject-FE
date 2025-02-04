@@ -1,5 +1,5 @@
 import React from "react";
-import { ImageBackground, useWindowDimensions } from "react-native";
+import { ImageBackground, useWindowDimensions, View, StyleSheet } from "react-native";
 
 const Background = ({ children }) => {
   const { width, height } = useWindowDimensions();
@@ -12,6 +12,12 @@ const Background = ({ children }) => {
         style={{ height: roundedHeight }}
         resizeMode="cover"
       >
+         <View
+    style={{
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: "rgba(0, 0, 0, 0.4)",
+    }}
+  />
         {children}
       </ImageBackground>
     </>

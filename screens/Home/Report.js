@@ -87,7 +87,7 @@ const Report = ({ route }) => {
       activeSection: section,
       direction:
         prevState.activeSection === section &&
-        prevState.direction === "ascending"
+          prevState.direction === "ascending"
           ? "descending"
           : "ascending",
     }));
@@ -132,6 +132,9 @@ const Report = ({ route }) => {
         }
 
         if (["matched_store", "matched_store_category"].includes(field)) {
+          const aField = a[field] ? String(a[field]) : "";
+          const bField = b[field] ? String(b[field]) : "";
+          return dir * aField.localeCompare(bField);
           return dir * a[field].localeCompare(b[field]);
         }
 
