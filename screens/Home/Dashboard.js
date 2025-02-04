@@ -141,6 +141,7 @@ const Dashboard = ({ route }) => {
           </View>
         </View>
       </View>
+
     </>
   );
 };
@@ -164,4 +165,5 @@ const styles = StyleSheet.create({
   textContent: {
     color: Colors.brown50,
   },
+  
 });

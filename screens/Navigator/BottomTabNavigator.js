@@ -3,11 +3,13 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Menu, Provider } from "react-native-paper";
 import { Colors } from "../../constants/Colors";
+import { View, StyleSheet } from "react-native";
 
 import Dashboard from "../Home/Dashboard";
 import Report from "../Home/Report";
 import Profile from "../Home/Profile";
 import Analysis from "../Home/Analysis";
+import Guide from "../Home/Guide";
 
 const Tab = createBottomTabNavigator();
 
@@ -20,6 +22,7 @@ export default function BottomTabNavigator({ route, navigation }) {
 
   return (
     <Provider>
+       <View style={{ flex: 1 }}>
       <Tab.Navigator
         screenOptions={{
           tabBarActiveTintColor: Colors.brown400,
@@ -118,6 +121,10 @@ export default function BottomTabNavigator({ route, navigation }) {
           }}
         />
       </Tab.Navigator>
+
+
+          <Guide userId={userId}/>
+      </View>
     </Provider>
   );
 }
