@@ -64,7 +64,7 @@ const Profile = ({ route, navigation }) => {
           <Text style={styles.text}>
             {firstName} {middleName} {lastName}
           </Text>
-          <Text style={styles.position}>{role}</Text>
+    
         </View>
       </View>
 
