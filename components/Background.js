@@ -15,7 +15,7 @@ const Background = ({ children }) => {
          <View
     style={{
       ...StyleSheet.absoluteFillObject,
-      backgroundColor: "rgba(0, 0, 0, 0.4)",
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
     }}
   />
         {children}

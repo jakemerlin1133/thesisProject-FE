@@ -21,15 +21,13 @@ const Scan = ({ route }) => {
         quality: 1,
       });
 
-      console.log("Captured image:", image);
-
       if (!image.canceled && image.assets && image.assets.length > 0) {
         const uri = image.assets[0].uri;
         console.log("Captured image URI:", uri);
         setImageUri(uri);
         submitHandler(uri);
       } else {
-        console.log("User cancelled the camera.");
+        navigation.navigate("DashboardTabs", userId);
       }
     };
     takeImageHandler();
