@@ -11,10 +11,11 @@ const Guide = ({userId}) => {
         try {
             const response = await axios.get(`${BASE_URL}/users/${userId}`);
             const user = response.data;
-
+            console.log(user)
             const updatedUserData = {
                 guide_1: true,
-            };
+            }
+
 
             const updateResponse = await axios.patch(`${BASE_URL}/users/${userId}`, updatedUserData, {
                 headers: { "Content-Type": "application/json" },
