@@ -91,10 +91,68 @@ const Register = () => {
     setIsChecked(!isChecked);
   };
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+  const validateEmail = async (email) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/users/`);
+      const users = response.data;
+
+      if (!email.trim()) {
+        return { valid: false, message: "Email is empty." };
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return { valid: false, message: "Invalid email format." };
+      }
+
+      const emailExists = users.some(user => user.email === email);
+      if (emailExists) {
+        return { valid: false, message: "Email already exists." };
+      }
+
+      return { valid: true, message: "" };
+    } catch (error) {
+      console.error("Error checking email:", error);
+      return { valid: false, message: "An error occurred while validating the email." };
+    }
   };
+  const validateUsername = async (username) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/users/`);
+      const users = response.data;
+
+      return users.some(user => user.user_name === username);
+    } catch (error) {
+      console.error("Error checking username:", error);
+      return false;
+    }
+  };
+
+  const validatePhoneNumber = async (phone) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/users/`);
+      const users = response.data;
+
+      if (!phone.trim()) {
+          return { valid: false, message: "Phone number is empty." };
+      }
+
+      const phoneRegex = /^\d{10,}$/; 
+      if (!phoneRegex.test(phone)) {
+          return { valid: false, message: "Phone number must be at least 10 digits long." };
+      }
+
+      const phoneExists = users.some(user => user.phone_number === phone);
+      if (phoneExists) {
+          return { valid: false, message: "Phone number already exists." };
+      }
+
+      return { valid: true, message: "" };
+  } catch (error) {
+      console.error("Error checking phone number:", error);
+      return { valid: false, message: "An error occurred while validating the phone number." };
+  }
+  }
 
   const submitHandler = async () => {
     const errors = {};
@@ -107,26 +165,42 @@ const Register = () => {
     if (!lastnameSubmit.trim()) {
       errors.lastname = "Lastname is empty.";
     }
-    if (emailSubmit.trim()) {
-      if (!validateEmail(emailSubmit)) {
-        errors.email = "Invalid email format.";
-      }
-    } else {
+
+    if (!emailSubmit.trim()) {
       errors.email = "Email is empty.";
-    }
-    if (phoneSubmit.trim()) {
-      if (phoneSubmit.length < 10) {
-        errors.phone = "Phone number must be at least 10 digits long.";
-      }
+    } else if (!validateEmail(emailSubmit)) {
+      errors.email = "Invalid email format.";
     } else {
-      errors.phone = "Phone number is empty.";
+      const emailValidation = await validateEmail(emailSubmit);
+      if (!emailValidation.valid) {
+        errors.email = emailValidation.message;
+      }
     }
+
+    if (!phoneSubmit.trim()) {
+      errors.phone = "Phone number is empty.";
+  } else {
+      const phoneValidation = await validatePhoneNumber(phoneSubmit);
+      if (!phoneValidation.valid) {
+          errors.phone = phoneValidation.message;
+      }
+  }
+
+
+
     if (!dobSubmit) {
       errors.dob = "Date of Birth is empty.";
     }
+
     if (!usernameSubmit) {
       errors.username = "Username is empty.";
+    } else {
+      const usernameExists = await validateUsername(usernameSubmit);
+      if (usernameExists) {
+        errors.username = "Username is already taken.";
+      }
     }
+
     if (!passwordSubmit) {
       errors.password = "Password is empty.";
     }
