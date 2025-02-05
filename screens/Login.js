@@ -143,7 +143,6 @@ const styles = StyleSheet.create({
   errorMessage: {
     color: Colors.red,
     textAlign: "center",
-    fontSize:16.5
   },
   buttonStyle: {
     backgroundColor: Colors.brown500,

@@ -4,43 +4,101 @@ import axios from "axios";
 import { Colors } from "../../constants/Colors";
 import { BASE_URL } from "../../config";
 
-const Guide = ({userId}) => {
+const Guide = ({ userId }) => {
     const [guide1, setGuide1] = useState(false);
+    const [guide2, setGuide2] = useState(false);
+    const [guide3, setGuide3] = useState(false);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const response = await axios.get(`${BASE_URL}/users/${userId}`);
+                const user = response.data;
+
+                setGuide1(user.guide_1);
+                setGuide2(user.guide_2);
+                setGuide3(user.guide_3);
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+            }
+        };
+
+        fetchUser();
+    }, [userId]);
 
     const guide1Handler = async () => {
         try {
-            const response = await axios.get(`${BASE_URL}/users/${userId}`);
-            const user = response.data;
-            console.log(user)
-            const updatedUserData = {
-                guide_1: true,
-            }
+            setGuide1(true);
 
-
-            const updateResponse = await axios.patch(`${BASE_URL}/users/${userId}`, updatedUserData, {
+            const updateResponse = await axios.patch(`${BASE_URL}/users/${userId}`, { guide_1: true }, {
                 headers: { "Content-Type": "application/json" },
             });
-
-            setGuide1(updateResponse.data.guide_1);
         } catch (error) {
             console.error("Error updating guide_1:", error);
         }
     };
 
+    const guide2Handler = async () => {
+        try {
+            setGuide2(true);
 
-    return (<>
-        {!guide1 && (
-  <View style={styles.overlay}>
-  <View style={styles.guideBox}>
-      <Text style={styles.guideText}>Guide 1</Text>
-      <TouchableOpacity style={styles.nextButton} onPress={guide1Handler}>
-          <Text style={styles.nextButtonText}>Next</Text>
-      </TouchableOpacity>
-  </View>
-</View>
-        )}
-      
-    </>)
+            const updateResponse = await axios.patch(`${BASE_URL}/users/${userId}`, { guide_2: true }, {
+                headers: { "Content-Type": "application/json" },
+            });
+        } catch (error) {
+            console.error("Error updating guide_2:", error);
+        }
+    };
+
+    const guide3Handler = async () => {
+        try {
+            setGuide3(true);
+
+            const updateResponse = await axios.patch(`${BASE_URL}/users/${userId}`, { guide_3: true }, {
+                headers: { "Content-Type": "application/json" },
+            });
+        } catch (error) {
+            console.error("Error updating guide_3:", error);
+        }
+    };
+
+
+    return (
+        <>
+            {!guide1 && (
+                <View style={styles.overlay}>
+                    <View style={styles.guideBox}>
+                        <Text style={styles.guideText}>Guide 1</Text>
+                        <TouchableOpacity style={styles.nextButton} onPress={guide1Handler}>
+                            <Text style={styles.nextButtonText}>Next</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )}
+
+            {guide1 && !guide2 && (
+                <View style={styles.overlay}>
+                    <View style={styles.guideBox}>
+                        <Text style={styles.guideText}>Guide 2</Text>
+                        <TouchableOpacity style={styles.nextButton} onPress={guide2Handler}>
+                            <Text style={styles.nextButtonText}>Next</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )}
+
+            {guide1 && guide2 && !guide3 && (
+                <View style={styles.overlay}>
+                    <View style={styles.guideBox}>
+                        <Text style={styles.guideText}>Guide 3</Text>
+                        <TouchableOpacity style={styles.nextButton} onPress={guide3Handler}>
+                            <Text style={styles.nextButtonText}>Done</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )}
+        </>
+    )
 }
 
 export default Guide;
