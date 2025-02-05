@@ -7,6 +7,7 @@ import {
   Image,
   Alert,
   ActivityIndicator,
+  ScrollView
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
@@ -98,6 +99,7 @@ const Upload = ({ route }) => {
 
   return (
     <>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
         <TouchableOpacity style={styles.selectTouchable} onPress={openGallery}>
           <Text style={styles.text}>Select File</Text>
@@ -130,6 +132,7 @@ const Upload = ({ route }) => {
           <></>
         )}
       </View>
+      </ScrollView>
     </>
   );
 };
@@ -140,12 +143,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 40,
+    alignItems: "center",
     justifyContent: "center",
   },
   selectTouchable: {
     backgroundColor: Colors.brown600,
     color: Colors.brown50,
     paddingVertical: 18,
+    paddingHorizontal:50
   },
 
   uploadTouchable: {
@@ -153,6 +158,7 @@ const styles = StyleSheet.create({
     color: Colors.brown50,
     marginTop: 30,
     paddingVertical: 18,
+    paddingHorizontal: 70
   },
 
   text: {
@@ -172,6 +178,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Colors.brown100,
+    
   },
   image: {
     width: "100%",
@@ -182,5 +189,11 @@ const styles = StyleSheet.create({
     color: Colors.brown600,
     fontSize: 16,
     textAlign: "center",
+  },
+  scrollContainer: {
+    flexGrow: 1, // Ensures ScrollView can expand
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 20,
   },
 });

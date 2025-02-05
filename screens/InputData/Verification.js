@@ -300,6 +300,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 40,
     justifyContent: "center",
+    alignItems:"center",
     paddingTop: 5,
   },
   iconContainer: {
@@ -325,6 +326,7 @@ const styles = StyleSheet.create({
 
   inputDisplay: {
     color: Colors.brown500,
+    width: 250
   },
 
   buttonStyle: {
