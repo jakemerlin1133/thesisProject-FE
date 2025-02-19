@@ -62,7 +62,7 @@ const Guide = ({ userId }) => {
 
     return (
         <>
-            {!guide1 && (
+            {guide1 && (
                 <View style={styles.overlay}>
                     <View style={styles.guideBox}>
                         <View style={styles.guideIconText}>
@@ -85,6 +85,9 @@ const Guide = ({ userId }) => {
                     </View>
                 </View>
             )}
+
+
+
 
             {guide1 && !guide2 && (
                 <View style={styles.overlay}>
