@@ -10,6 +10,7 @@ const ListOfExpensesCategory = ({
   billExpenses,
   hardwareExpenses,
   medicineExpenses,
+  technologyExpenses,
   othersExpenses,
 }) => {
   return (
@@ -115,6 +116,23 @@ const ListOfExpensesCategory = ({
             </View>
             <View style={styles.expensesContainer}>
               <Text style={styles.expensesText}>P {hardwareExpenses}</Text>
+            </View>
+          </View>
+
+          <View style={styles.expensesCategory}>
+            <View>
+              <Ionicons
+                name="hardware-chip-outline"
+                size={24}
+                style={styles.iconStyle}
+              />
+            </View>
+
+            <View style={styles.foodStyleContainer}>
+              <Text style={styles.textCategoryandExepenses}>Technology</Text>
+            </View>
+            <View style={styles.expensesContainer}>
+              <Text style={styles.expensesText}>P {technologyExpenses}</Text>
             </View>
           </View>
 

@@ -17,6 +17,7 @@ const Dashboard = ({ route }) => {
   const [billSumExpenses, setBillSumExpenses] = useState(0);
   const [hardwareSumExpenses, setHardwareSumExpenses] = useState(0);
   const [medicineSumExpenses, setMedicineSumExpenses] = useState(0);
+  const [technologySumExpenses, setTechnologySumExpenses] = useState(0);
   const [othersSumExpenses, setOthersSumExpenses] = useState(0);
 
   useEffect(() => {
@@ -102,6 +103,11 @@ const Dashboard = ({ route }) => {
           .reduce((acc, expense) => acc + parseFloat(expense.total_value), 0);
         setHardwareSumExpenses(hardwareSum.toFixed(2));
 
+        const technologySum = latestDateExpenses
+          .filter((expense) => expense.matched_store_category === "Technology")
+          .reduce((acc, expense) => acc + parseFloat(expense.total_value), 0);
+        setTechnologySumExpenses(technologySum.toFixed(2));
+
         const othersSum = latestDateExpenses
           .filter((expense) => expense.matched_store_category === "Others")
           .reduce((acc, expense) => acc + parseFloat(expense.total_value), 0);
@@ -136,6 +142,7 @@ const Dashboard = ({ route }) => {
               billExpenses={billSumExpenses}
               medicineExpenses={medicineSumExpenses}
               hardwareExpenses={hardwareSumExpenses}
+              technologyExpenses={technologySumExpenses}
               othersExpenses={othersSumExpenses}
             />
           </View>
