@@ -157,15 +157,6 @@ const Verification = ({ route }) => {
     const response = await axios.delete(endpoint, {
       headers: { "Content-Type": "application/json" },
     });
-
-    // Alert.alert("Success", "Image Deleted successfully!", [
-    //   {
-    //     text: "OK",
-    //     onPress: () => {
-    //       navigation.navigate("DashboardTabs", { userId });
-    //     },
-    //   },
-    // ]);
   };
 
   return (
