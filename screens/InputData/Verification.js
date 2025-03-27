@@ -8,18 +8,17 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  BackHandler,
 } from "react-native";
 import { Ionicons } from "react-native-vector-icons";
 import axios from "axios";
 import { Colors } from "../../constants/Colors";
 import { BASE_URL } from "../../config";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
 const Verification = ({ route }) => {
   const { userId } = route.params;
-
   const navigation = useNavigation();
-
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editableFields, setEditableFields] = useState(new Set());
@@ -28,7 +27,6 @@ const Verification = ({ route }) => {
     const fetchExpenseData = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/expense/${userId}/`);
-
         const latestExpense = response.data.sort((a, b) => b.id - a.id)[0];
 
         if (latestExpense) {
@@ -37,17 +35,13 @@ const Verification = ({ route }) => {
             typeof latestExpense.total_value === "string"
           ) {
             const totalValue = parseFloat(latestExpense.total_value);
-
-            if (!isNaN(totalValue)) {
-              latestExpense.total_value = totalValue.toFixed(2);
-            } else {
-              latestExpense.total_value = "Invalid value";
-            }
+            latestExpense.total_value = !isNaN(totalValue)
+              ? totalValue.toFixed(2)
+              : "Invalid value";
           } else {
             latestExpense.total_value = "Invalid value";
           }
         }
-
         setData(latestExpense);
         setLoading(false);
       } catch (error) {
@@ -56,9 +50,23 @@ const Verification = ({ route }) => {
         setLoading(false);
       }
     };
-
     fetchExpenseData();
   }, [userId]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        cancelHandler();
+        navigation.navigate("DashboardTabs", { userId });
+        return true;
+      };
+
+      const backHandler = BackHandler.addEventListener("hardwareBackPress", onBackPress);
+
+      return () => backHandler.remove();
+    }, [navigation, userId, data])
+  );
+
 
   if (loading) {
     return <Text>Loading...</Text>;
@@ -114,7 +122,7 @@ const Verification = ({ route }) => {
     }
   };
 
-  const deletetHandler = async () => {
+  const deleteHandler = async () => {
     if (!data || !data.id) {
       Alert.alert("Error", "Expense ID not found.");
       return;
@@ -135,6 +143,29 @@ const Verification = ({ route }) => {
         },
       },
     ]);
+  };
+
+  const cancelHandler = async () => {
+    if (!data || !data.id) {
+      Alert.alert("Error", "Expense ID not found.");
+      return;
+    }
+
+    const expenseId = data.id;
+    const endpoint = `${BASE_URL}/expense/${userId}/${expenseId}/`;
+
+    const response = await axios.delete(endpoint, {
+      headers: { "Content-Type": "application/json" },
+    });
+
+    // Alert.alert("Success", "Image Deleted successfully!", [
+    //   {
+    //     text: "OK",
+    //     onPress: () => {
+    //       navigation.navigate("DashboardTabs", { userId });
+    //     },
+    //   },
+    // ]);
   };
 
   return (
@@ -258,7 +289,7 @@ const Verification = ({ route }) => {
 
               <TouchableOpacity
                 style={styles.deleteButtonStyle}
-                onPress={deletetHandler}
+                onPress={deleteHandler}
               >
                 <Text style={styles.deleteButtonText}>Delete</Text>
               </TouchableOpacity>
