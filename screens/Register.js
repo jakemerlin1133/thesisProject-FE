@@ -186,10 +186,10 @@ const Register = () => {
       }
   }
 
-
-
     if (!dobSubmit) {
       errors.dob = "Date of Birth is empty.";
+    } else if (age < 18) {
+      errors.dob = "You must be at least 18 years old.";
     }
 
     if (!usernameSubmit) {

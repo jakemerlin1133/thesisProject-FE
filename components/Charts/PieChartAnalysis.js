@@ -3,18 +3,29 @@ import { useWindowDimensions, View, StyleSheet, Text } from "react-native";
 import { Colors } from "../../constants/Colors";
 import { PieChart } from "react-native-chart-kit";
 
-const generateRandomColor = () => {
-  const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-  return `#${randomColor.padStart(6, "0")}`;
-};
+const predefinedColors = [
+  "#9461f2",
+  "#33FF57", 
+  "#FF5733", 
+  "#FF33A8", 
+  "#3357FF", 
+  "#FFD700", 
+  "#8A2BE2", 
+  "#7eabf2",
+];
 
 const PieChartAnalysis = ({ pieData }) => {
-  const pieDataWithColors = pieData.map((item) => ({
-    ...item,
-    color: generateRandomColor(),
-    legendFontColor: Colors.brown100,
+  // Ensure the pieData structure is correct and assign static colors
+  const pieDataWithColors = pieData.map((item, index) => ({
+    name: item.name,
+    expenses: item.expenses, // Ensure this matches the "accessor" field
+    color: predefinedColors[index % predefinedColors.length], 
+    legendFontColor: "#795548",
     legendFontSize: 15,
   }));
+
+  // Log the data to check if colors are assigned correctly
+  console.log("Pie Data:", pieDataWithColors);
 
   const { width } = useWindowDimensions();
   const widthWithPadding = width - 30;

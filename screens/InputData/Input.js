@@ -140,7 +140,7 @@ const Input = ({ route }) => {
         />
 
         <TouchableOpacity style={styles.buttonStyle} onPress={submitHandler}>
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>
     </>
