@@ -17,7 +17,6 @@ const Scan = ({ route }) => {
     const takeImageHandler = async () => {
       const image = await launchCameraAsync({
         allowsEditing: true,
-        aspect: [3, 4],
         quality: 1,
       });
 
