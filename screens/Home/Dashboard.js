@@ -128,7 +128,7 @@ const Dashboard = ({ route }) => {
             <Text
               style={[styles.textContent, { fontSize: 30, fontWeight: "bold" }]}
             >
-              ₱{totalSum.toFixed(2)}
+              ₱{totalSum.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,")}
             </Text>
             <Text style={[styles.textContent, { fontSize: 15 }]}>
               Current Month's Expenses
