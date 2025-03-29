@@ -13,71 +13,81 @@ import { BASE_URL } from "../../config";
 import { Colors } from "../../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 
+
 const Input = ({ route }) => {
   const { userId } = route.params;
 
   const navigation = useNavigation();
-
   const [storeOptions, setStoreOptions] = useState([]);
   const [amount, setAmount] = useState("");
+  const [rawAmount, setRawAmount] = useState("");
   const [selectedStore, setSelectedStore] = useState(null);
   const [selectOtherStore, setSelectOtherStore] = useState(null);
   const [errorMessage, setErrorMessage] = useState({});
 
+  const formatNumberWithCommas = (num) => {
+    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+  
+  const MAX_AMOUNT = 999999999999999;
+
   const handleChange = (input) => {
-    if (/^\d*\.?\d*$/.test(input)) {
-      setAmount(input);
+    const rawValue = input.replace(/,/g, ""); 
+
+    if (rawValue === "" || (/^\d*\.?\d{0,2}$/.test(rawValue) && Number(rawValue) <= MAX_AMOUNT)) {
+      setRawAmount(rawValue);
+      setAmount(formatNumberWithCommas(rawValue)); 
+    } else {
+      console.log("Amount exceeds maximum allowed value.");
     }
+
   };
 
   useEffect(() => {
     const fetchStore = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/stores/`);
-        const stores = response.data;
-
-        const formattedStores = stores.map((store) => ({
+        const stores = response.data.map((store) => ({
           label: store.store,
           value: store.store,
         }));
 
-        const updatedStores = [
-          ...formattedStores,
-          { label: "Others", value: "Others" },
-        ];
-        setStoreOptions(updatedStores);
+        setStoreOptions([...stores, { label: "Others", value: "Others" }]);
       } catch (error) {
         console.error("Error fetching store:", error);
       }
     };
+
     fetchStore();
   }, [userId]);
 
   const submitHandler = async () => {
     const errors = {};
 
-    if (selectedStore === "Others" && !selectOtherStore?.trim()) {
-      errors.otherStore = "Other store is empty";
+    if (selectedStore === "Others" && !selectOtherStore.trim()) {
+      errors.otherStore = "Please enter the store name.";
     }
 
     if (!selectedStore) {
-      errors.store = "Store is empty";
+      errors.store = "Please select a store.";
     }
 
-    if (!amount.trim()) {
-      errors.amount = "Amount is empty";
+    if (!rawAmount.trim()) {
+      errors.amount = "Please enter an amount.";
     }
 
     setErrorMessage(errors);
+
     if (Object.keys(errors).length === 0) {
       const expenseData = {
         user_id: userId,
         file: null,
         matched_store:
           selectedStore === "Others" ? selectOtherStore : selectedStore,
-        total_value:
-          amount !== undefined && amount !== null ? parseFloat(amount) : 0.0,
+          total_value: rawAmount || "0.00",
       };
+
+      console.log("Submitting Expense Data:", expenseData);
 
       try {
         const response = await axios.post(

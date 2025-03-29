@@ -24,9 +24,6 @@ const PieChartAnalysis = ({ pieData }) => {
     legendFontSize: 15,
   }));
 
-  // Log the data to check if colors are assigned correctly
-  console.log("Pie Data:", pieDataWithColors);
-
   const { width } = useWindowDimensions();
   const widthWithPadding = width - 30;
 
