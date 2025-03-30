@@ -12,6 +12,7 @@ import SuccessRegister from "./screens/SuccessRegister";
 import BottomTabNavigator from "./screens/Navigator/BottomTabNavigator";
 import TermsAndConditions from "./screens/TermsAndConditions";
 import PrivacyPolicy from "./screens/PrivacyPolicy";
+import ExpensesPerCategory from "./ExpensesPerCategory";
 
 import Input from "./screens/InputData/Input";
 import Upload from "./screens/InputData/Upload";
@@ -171,6 +172,18 @@ export default function App() {
               headerTintColor: Colors.brown100,
             }}
           />
+          <Stack.Screen
+            name="ExpensesPerCategory"
+            component={ExpensesPerCategory}
+            initialParams={{ userId }}
+            options={{
+              headerStyle: {
+                backgroundColor: Colors.brown500,
+              },
+              headerTintColor: Colors.brown100,
+              title: "Expenses Per Category",
+            }}
+            />
         </Stack.Navigator>
       </NavigationContainer>
     </>

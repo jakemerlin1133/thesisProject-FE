@@ -144,6 +144,7 @@ const Dashboard = ({ route }) => {
               hardwareExpenses={hardwareSumExpenses}
               technologyExpenses={technologySumExpenses}
               othersExpenses={othersSumExpenses}
+              userId={userId}
             />
           </View>
         </View>

@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../constants/Colors";
 
 const ListOfExpensesCategory = ({
@@ -12,7 +13,13 @@ const ListOfExpensesCategory = ({
   medicineExpenses,
   technologyExpenses,
   othersExpenses,
+  userId,
 }) => {
+  const navigation = useNavigation();
+
+  const goToExpensesPerCategory = (category, amount) => {
+    navigation.navigate("ExpensesPerCategory", { category, amount, userId });
+  };
 
 
   return (
@@ -20,7 +27,7 @@ const ListOfExpensesCategory = ({
       <ScrollView>
         <View style={styles.container}>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => goToExpensesPerCategory("Food", fooodExpenses)}>
             <View style={styles.expensesCategory}>
               <View>
                 <Ionicons
@@ -39,7 +46,7 @@ const ListOfExpensesCategory = ({
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => goToExpensesPerCategory("Grocery", groceryExpenses)}>
             <View style={styles.expensesCategory}>
               <View>
                 <Ionicons
@@ -58,7 +65,7 @@ const ListOfExpensesCategory = ({
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => goToExpensesPerCategory("Shopping", shoppingExpenses)}>
             <View style={styles.expensesCategory}>
               <View>
                 <Ionicons
@@ -77,7 +84,7 @@ const ListOfExpensesCategory = ({
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => goToExpensesPerCategory("Bill", billExpenses)}>
             <View style={styles.expensesCategory}>
               <View>
                 <Ionicons
@@ -96,7 +103,7 @@ const ListOfExpensesCategory = ({
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => goToExpensesPerCategory("Medicine", medicineExpenses)}>
             <View style={styles.expensesCategory}>
               <View>
                 <Ionicons
@@ -115,7 +122,7 @@ const ListOfExpensesCategory = ({
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => goToExpensesPerCategory("Hardware", hardwareExpenses)}>
             <View style={styles.expensesCategory}>
               <View>
                 <Ionicons
@@ -136,7 +143,7 @@ const ListOfExpensesCategory = ({
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => goToExpensesPerCategory("Technology", technologyExpenses)}>
             <View style={styles.expensesCategory}>
               <View>
                 <Ionicons
@@ -155,7 +162,7 @@ const ListOfExpensesCategory = ({
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => goToExpensesPerCategory("Others", othersExpenses)}>
             <View style={styles.expensesCategory}>
               <View>
                 <Ionicons
