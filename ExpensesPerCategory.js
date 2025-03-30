@@ -15,8 +15,8 @@ import * as Print from "expo-print";
 import axios from "axios";
 import { BASE_URL } from "./config";
 
-const ExpensesPerCategory = ({ route, navigation  }) => {
-  const { category, amount, userId  } = route.params;
+const ExpensesPerCategory = ({ route, navigation }) => {
+  const { category, amount, userId } = route.params;
   const [tableData, setTableData] = useState([]);
   const [sortState, setSortState] = useState({
     activeSection: "date",
@@ -163,7 +163,9 @@ const ExpensesPerCategory = ({ route, navigation  }) => {
       <Text style={styles.cell}>{item.matched_store}</Text>
       <Text style={styles.cell}>{item.matched_store_category}</Text>
       <Text style={styles.cell}>{item.formattedDate}</Text>
-      <Text style={styles.cell}>{item.total_value}</Text>
+      <Text style={styles.cell}>
+        {Number(item.total_value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+      </Text>
     </View>
   );
 
@@ -397,7 +399,7 @@ const ExpensesPerCategory = ({ route, navigation  }) => {
             ListFooterComponent={
               <>
                 <Text style={styles.totalExpenses}>
-                  Total Expenses:{totalExpenses.toFixed(2)}
+                  Total Expenses: {Number(totalExpenses).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </Text>
                 <View style={styles.paginationContainer}>
                   <TouchableOpacity

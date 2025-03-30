@@ -153,7 +153,9 @@ const Report = ({ route }) => {
       <Text style={styles.cell}>{item.matched_store}</Text>
       <Text style={styles.cell}>{item.matched_store_category}</Text>
       <Text style={styles.cell}>{item.formattedDate}</Text>
-      <Text style={styles.cell}>{item.total_value}</Text>
+      <Text style={styles.cell}>
+        {Number(item.total_value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+      </Text>
     </View>
   );
 
@@ -387,7 +389,7 @@ const Report = ({ route }) => {
             ListFooterComponent={
               <>
                 <Text style={styles.totalExpenses}>
-                  Total Expenses:{totalExpenses.toFixed(2)}
+                  Total Expenses: {Number(totalExpenses).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </Text>
                 <View style={styles.paginationContainer}>
                   <TouchableOpacity
