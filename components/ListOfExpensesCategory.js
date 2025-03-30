@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../constants/Colors";
 
@@ -13,10 +13,14 @@ const ListOfExpensesCategory = ({
   technologyExpenses,
   othersExpenses,
 }) => {
+
+
   return (
     <>
       <ScrollView>
         <View style={styles.container}>
+
+          <TouchableOpacity>
           <View style={styles.expensesCategory}>
             <View>
               <Ionicons
@@ -33,7 +37,9 @@ const ListOfExpensesCategory = ({
               <Text style={styles.expensesText}>P {fooodExpenses}</Text>
             </View>
           </View>
+          </TouchableOpacity>
 
+          <TouchableOpacity>
           <View style={styles.expensesCategory}>
             <View>
               <Ionicons
@@ -50,7 +56,9 @@ const ListOfExpensesCategory = ({
               <Text style={styles.expensesText}>P {groceryExpenses}</Text>
             </View>
           </View>
+          </TouchableOpacity>
 
+          <TouchableOpacity>
           <View style={styles.expensesCategory}>
             <View>
               <Ionicons
@@ -67,7 +75,9 @@ const ListOfExpensesCategory = ({
               <Text style={styles.expensesText}>P {shoppingExpenses}</Text>
             </View>
           </View>
+          </TouchableOpacity>
 
+          <TouchableOpacity>
           <View style={styles.expensesCategory}>
             <View>
               <Ionicons
@@ -84,7 +94,9 @@ const ListOfExpensesCategory = ({
               <Text style={styles.expensesText}>P {billExpenses}</Text>
             </View>
           </View>
+          </TouchableOpacity>
 
+          <TouchableOpacity>
           <View style={styles.expensesCategory}>
             <View>
               <Ionicons
@@ -101,11 +113,13 @@ const ListOfExpensesCategory = ({
               <Text style={styles.expensesText}>P {medicineExpenses}</Text>
             </View>
           </View>
+          </TouchableOpacity>
 
+          <TouchableOpacity>
           <View style={styles.expensesCategory}>
             <View>
               <Ionicons
-                name="hardware-chip-outline"
+                name="build-outline"
                 size={24}
                 style={styles.iconStyle}
               />
@@ -118,7 +132,9 @@ const ListOfExpensesCategory = ({
               <Text style={styles.expensesText}>P {hardwareExpenses}</Text>
             </View>
           </View>
+          </TouchableOpacity>
 
+          <TouchableOpacity>
           <View style={styles.expensesCategory}>
             <View>
               <Ionicons
@@ -135,7 +151,9 @@ const ListOfExpensesCategory = ({
               <Text style={styles.expensesText}>P {technologyExpenses}</Text>
             </View>
           </View>
+          </TouchableOpacity>
 
+          <TouchableOpacity>
           <View style={styles.expensesCategory}>
             <View>
               <Ionicons
@@ -152,6 +170,8 @@ const ListOfExpensesCategory = ({
               <Text style={styles.expensesText}>P {othersExpenses}</Text>
             </View>
           </View>
+          </TouchableOpacity>
+
         </View>
       </ScrollView>
     </>
