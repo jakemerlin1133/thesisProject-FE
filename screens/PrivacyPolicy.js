@@ -51,7 +51,7 @@ const PrivacyPolicy = () => {
           </View>
 
           <View style={styles.sectionContainer}>
-            <Text style={styles.title}>3. Your Rights</Text>
+            <Text style={styles.title}>4. Your Rights</Text>
             <Text style={styles.bulletStyle}>
               {"\u2022"} Access, update, or delete your personal data.
             </Text>
