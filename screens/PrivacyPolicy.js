@@ -65,7 +65,7 @@ const PrivacyPolicy = () => {
           </View>
 
           <View style={styles.sectionContainer}>
-            <Text style={styles.title}>4. Data Security</Text>
+            <Text style={styles.title}>5. Data Security</Text>
             <Text>
               We take the protection of your personal information seriously and
               have implemented appropriate technical and organizational measures
