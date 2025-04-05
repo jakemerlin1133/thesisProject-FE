@@ -11,12 +11,12 @@ import RNPickerSelect from "react-native-picker-select";
 import { Colors } from "./constants/Colors";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import * as Print from "expo-print";
-
+import { Alert } from "react-native";
 import axios from "axios";
 import { BASE_URL } from "./config";
 
 const ExpensesPerCategory = ({ route, navigation }) => {
-  const { category, amount, userId } = route.params;
+  const { category, userId } = route.params;
   const [tableData, setTableData] = useState([]);
   const [sortState, setSortState] = useState({
     activeSection: "date",
@@ -158,14 +158,59 @@ const ExpensesPerCategory = ({ route, navigation }) => {
     return filteredData;
   }, [tableData, sortState, selectedMonth, selectedYear, category]);
 
+
+  const updateHandler = async (id) => {
+    navigation.navigate("UpdateExpenses", { userId, expenseId: id });
+  }
+
+  const deleteHandler = async (id) => {
+    Alert.alert("Confirm Delettion",
+      "Are you sure you want to delete this item?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          onPress: async () => {
+            try {
+              const response = await axios.delete(`${BASE_URL}/expense/${userId}/${id}/`);
+              console.log("Deleted successfully:", response.data);
+              setTableData((prevData) => prevData.filter((item) => item.id !== id));
+              Alert.alert("Success", "Expense deleted successfully.");
+            } catch (error) {
+              console.error("Error deleting expense:", error);
+            }
+          },
+        },
+      ],
+      { cancelable: false }
+    )
+  }
+
+
+
   const renderItem = ({ item }) => (
     <View style={styles.rows}>
       <Text style={styles.cell}>{item.matched_store}</Text>
       <Text style={styles.cell}>{item.matched_store_category}</Text>
-      <Text style={styles.cell}>{item.formattedDate}</Text>
-      <Text style={styles.cell}>
+      <Text style={[styles.cell, { marginLeft: 9, }]}>{item.formattedDate}</Text>
+      <Text style={[styles.cell, { marginLeft: 2, marginRight: -8 }]}>
         {Number(item.total_value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
       </Text>
+
+      <View style={styles.actionHeaderCell}>
+        <TouchableOpacity onPress={() => updateHandler(item.id)}>
+          <Ionicons size={20} color="green" name="create-outline" />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => deleteHandler(item.id)}>
+          <Ionicons size={20} color={Colors.red} name="trash-outline" />
+        </TouchableOpacity>
+      </View>
+
     </View>
   );
 
@@ -394,6 +439,17 @@ const ExpensesPerCategory = ({ route, navigation }) => {
                     />
                   </View>
                 </TouchableOpacity>
+
+
+                <TouchableOpacity
+                  style={styles.headerCell}
+                  onPress={() => arrangementHandler("total_value")}
+                >
+                  <View style={styles.ascendingDescendingRow}>
+                  </View>
+                </TouchableOpacity>
+
+
               </View>
             }
             ListFooterComponent={
@@ -441,7 +497,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   headerCell: {
-    flex: 1,
+    width: "24.6%",
     fontWeight: "bold",
     textAlign: "center",
   },
@@ -451,7 +507,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ddd",
   },
   cell: {
-    flex: 1,
+    width: "23%",
     padding: 5,
     textAlign: "center",
   },
@@ -511,10 +567,14 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
   textHeader: {
-    flex: 1,
+    flex: 1.5,
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 13,
+  },
+  actionHeaderCell: {
+    padding: 8,
+    alignItems: 'center',
   },
   ascendingDescendingRow: {
     marginHorizontal: 5,

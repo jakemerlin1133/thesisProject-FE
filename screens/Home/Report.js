@@ -11,6 +11,7 @@ import {
 import RNPickerSelect from "react-native-picker-select";
 import { Colors } from "../../constants/Colors";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { useNavigation } from '@react-navigation/native';
 import * as Print from "expo-print";
 
 import axios from "axios";
@@ -23,6 +24,8 @@ const Report = ({ route }) => {
     activeSection: "date",
     direction: "descending",
   });
+
+  const navigation = useNavigation(); 
 
   const [selectedPrinter, setSelectedPrinter] = useState();
   const [currentPage, setCurrentPage] = useState(1);
@@ -150,7 +153,7 @@ const Report = ({ route }) => {
   }, [tableData, sortState, selectedMonth, selectedYear]);
 
   const updateHandler = async (id) => {
-    console.log(id);
+    navigation.navigate("UpdateExpenses", { userId, expenseId: id });
   }
 
   const deleteHandler = async (id) => {
@@ -190,7 +193,7 @@ const Report = ({ route }) => {
       </Text>
 
       <View style={styles.actionHeaderCell}>
-      <TouchableOpacity onPress={() => updateHandler(item.id)}>
+      <TouchableOpacity onPress={() => updateHandler(item.id)}> 
         <Ionicons size={20} color="green" name="create-outline"/>
       </TouchableOpacity>
 

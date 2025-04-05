@@ -20,6 +20,7 @@ import Scan from "./screens/InputData/Scan";
 import Verification from "./screens/InputData/Verification";
 
 import { Colors } from "./constants/Colors";
+import UpdateExpenses from "./UpdateExpenses";
 
 const Stack = createStackNavigator();
 
@@ -182,6 +183,18 @@ export default function App() {
               },
               headerTintColor: Colors.brown100,
               title: "Expenses Per Category",
+            }}
+            />
+            <Stack.Screen
+            name="UpdateExpenses"
+            component={UpdateExpenses}
+            initialParams={{ userId }}
+            options={{
+              headerStyle: {
+                backgroundColor: Colors.brown500,
+              },
+              headerTintColor: Colors.brown100,
+              title: "Update Expenses",
             }}
             />
         </Stack.Navigator>
