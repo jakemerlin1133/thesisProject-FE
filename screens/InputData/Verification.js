@@ -215,7 +215,9 @@ const Verification = ({ route }) => {
               style={[
                 styles.textAmount,
                 {
-                  backgroundColor: Colors.brown300,
+                  backgroundColor: editableFields.has("category")
+                    ? Colors.brown100
+                    : Colors.brown300,
                 },
               ]}
             >
@@ -223,8 +225,27 @@ const Verification = ({ route }) => {
                 style={[styles.inputDisplay, { flex: 1 }]}
                 placeholderTextColor={Colors.brown600}
                 value={matched_store_category}
-                editable={false}
+                editable={editableFields.has("category")}
+                onChangeText={(text) =>
+                  setData((prevData) => ({
+                    ...prevData,
+                    matched_store: [
+                      text,
+                      ...(prevData.matched_store?.slice(1) || []),
+                    ],
+                  }))
+                }
               />
+
+              <TouchableOpacity style={styles.iconContainer}>
+                <Ionicons
+                  name="create-outline"
+                  size={24}
+                  color={Colors.brown500}
+                  style={styles.editIcon}
+                  onPress={() => editHandler("category")}
+                />
+              </TouchableOpacity>
             </View>
 
             <View
@@ -322,7 +343,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 40,
     justifyContent: "center",
-    alignItems:"center",
+    alignItems: "center",
     paddingTop: 5,
   },
   iconContainer: {
