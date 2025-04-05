@@ -172,6 +172,7 @@ const Report = ({ route }) => {
             const response = await axios.delete(`${BASE_URL}/expense/${userId}/${id}/`);
             console.log("Deleted successfully:", response.data);
             setTableData((prevData) => prevData.filter((item) => item.id !== id));
+            navigation.navigate("DashboardTabs", { refresh: true, userId });
             Alert.alert("Success", "Expense deleted successfully.");
           } catch (error) {
             console.error("Error deleting expense:", error);
